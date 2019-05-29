@@ -6,19 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | Tshangs</title>
+  <title>Densenet论文笔记 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Densenet和Resnet类似都使用了断路连接的方式(Densenet为concat，Resnet为add)，但是Densenet做的更加“粗暴”，它将第L层前的每一层的输出都连接到第L层上，这样做可以进行特征复用和使用更少的通道数来减少参数量，第l层的输入为k0+k(l-1),输出channel为k，并且称k为增长率。当然这是在Dense bl">
+<meta name="keywords" content="深度学习,目标分类,Densenet">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/05/11/hello-world/index.html">
+<meta property="og:title" content="Densenet论文笔记">
+<meta property="og:url" content="http://yoursite.com/2019/05/26/densenet/index.html">
 <meta property="og:site_name" content="Tshangs">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Densenet和Resnet类似都使用了断路连接的方式(Densenet为concat，Resnet为add)，但是Densenet做的更加“粗暴”，它将第L层前的每一层的输出都连接到第L层上，这样做可以进行特征复用和使用更少的通道数来减少参数量，第l层的输入为k0+k(l-1),输出channel为k，并且称k为增长率。当然这是在Dense bl">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-29T13:24:25.084Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/26/densenet/images/densenet_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/26/densenet/images/densenet_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/26/densenet/images/densenet_3.png">
+<meta property="og:updated_time" content="2019-05-26T16:07:48.218Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="Densenet论文笔记">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Densenet和Resnet类似都使用了断路连接的方式(Densenet为concat，Resnet为add)，但是Densenet做的更加“粗暴”，它将第L层前的每一层的输出都连接到第L层上，这样做可以进行特征复用和使用更少的通道数来减少参数量，第l层的输入为k0+k(l-1),输出channel为k，并且称k为增长率。当然这是在Dense bl">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/26/densenet/images/densenet_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -154,41 +159,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-densenet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      Densenet论文笔记
     </h1>
   
 
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/11/hello-world/" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/densenet/" class="pageViews">0</span>次
   </a>
 
         
-        <a href="/2019/05/11/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-11T09:04:31.009Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-11</time>
+        <a href="/2019/05/26/densenet/" class="archive-article-date">
+  	<time datetime="2019-05-26T11:05:44.258Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>&ensp;&ensp;&ensp;&ensp;<strong>Densenet</strong>和<strong>Resnet</strong>类似都使用了断路连接的方式(<strong>Densenet</strong>为concat，<strong>Resnet</strong>为add)，但是<strong>Densenet</strong>做的更加“粗暴”，它将第L层前的每一层的输出都连接到第L层上，这样做可以进行特征复用和使用更少的通道数来减少参数量，第l层的输入为k<sub>0</sub>+k(l-1),输出channel为k，并且称k为增长率。当然这是在<strong>Dense block</strong>中进行的，不然随着网络层数的增加每一层的输入将不断增长。<br><a id="more"></a></p>
+<p><div align="center"><img src="./images/densenet_1.png" width="600" height="100" align="center/"></div><br>&ensp;&ensp;&ensp;&ensp;同时作者还探索到这种稠密连接结构还具有正则化的效果，可以减少过拟合。其中每个Dense Block包含若干个瓶颈结构，每个瓶颈结构由BN-ReLU-Conv(1x1)和BN-ReLU-Conv(3x3)(与resnetv2相似)组成，其中1x1的channel数为4k，3x3的channel数为k，论文中的所有3X3的卷积核都通过padding使其特征图大小不变。在每个Block之间由Transition层连接来进行降维，每个Transition层由一个1x1卷积层，2x2的步长为2的平均池化层组成，其中1x1的卷积层的channel数由一个变量&theta;决定，一般设置为0.5，只对Transition层的1X1输出进行压缩(&theta;&lt;1)称为<strong>Densenet-C</strong>,如果对所有的1x1包括瓶颈层的进行压缩称为<strong>Densenet-BC</strong>。</p>
+<p><div align="center"><img src="./images/densenet_2.png" width="800" height="500" align="center/"></div><br>&ensp;&ensp;&ensp;&ensp;第一层7x7的卷积的输出为2k，在imagenet数据集上作者利用了四个<strong>Dense block</strong>，而在其它数据集作者使用了三个<strong>Dense block</strong>。<br>&ensp;&ensp;&ensp;&ensp;其不同结构的对比如下：</p>
+<p><div align="center"><img src="./images/densenet_3.png" width="800" height="500" align="center/"></div><br>参考：<br>  &ensp;<a href="https://arxiv.org/abs/1608.06993" target="_blank" rel="noopener">https://arxiv.org/abs/1608.06993</a><br> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
 
       
 
@@ -223,6 +223,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Densenet</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -273,7 +292,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/11/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/26/densenet/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -287,15 +306,20 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/19/inceptionv1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/26/resnext/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          inceptionv1论文笔记
+          Resnext论文笔记
         
       </div>
     </a>
   
+  
+    <a href="/2019/05/26/resnet/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Resnet论文笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

@@ -6,19 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | Tshangs</title>
+  <title>Resnet论文笔记 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Resnet是何凯明的一部神作，残差结构的出现真正让卷积神经网络gooing deeper，通过残差结构可以达到152层(resnetv1的1202层效果并不是很好，resnetv2达到了1000层以上），这种结构的改进可以说是和BN一样具有网络通用性。那么大神是怎么想到这一点的呢，这篇论文的动机来自于作者观察到的一个普遍现象，在较深的卷积神经网络训">
+<meta name="keywords" content="深度学习,目标分类,Resnet">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/05/11/hello-world/index.html">
+<meta property="og:title" content="Resnet论文笔记">
+<meta property="og:url" content="http://yoursite.com/2019/05/26/resnet/index.html">
 <meta property="og:site_name" content="Tshangs">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Resnet是何凯明的一部神作，残差结构的出现真正让卷积神经网络gooing deeper，通过残差结构可以达到152层(resnetv1的1202层效果并不是很好，resnetv2达到了1000层以上），这种结构的改进可以说是和BN一样具有网络通用性。那么大神是怎么想到这一点的呢，这篇论文的动机来自于作者观察到的一个普遍现象，在较深的卷积神经网络训">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-29T13:24:25.084Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/26/resnet/images/resnetv1_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/26/resnet/images/resnetv1_2.png">
+<meta property="og:updated_time" content="2019-05-26T16:36:31.483Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="Resnet论文笔记">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Resnet是何凯明的一部神作，残差结构的出现真正让卷积神经网络gooing deeper，通过残差结构可以达到152层(resnetv1的1202层效果并不是很好，resnetv2达到了1000层以上），这种结构的改进可以说是和BN一样具有网络通用性。那么大神是怎么想到这一点的呢，这篇论文的动机来自于作者观察到的一个普遍现象，在较深的卷积神经网络训">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/26/resnet/images/resnetv1_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -154,41 +158,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-resnet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      Resnet论文笔记
     </h1>
   
 
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/11/hello-world/" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/resnet/" class="pageViews">0</span>次
   </a>
 
         
-        <a href="/2019/05/11/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-11T09:04:31.009Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-11</time>
+        <a href="/2019/05/26/resnet/" class="archive-article-date">
+  	<time datetime="2019-05-26T11:05:22.661Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>&ensp;&ensp;&ensp;&ensp;<strong>Resnet</strong>是何凯明的一部神作，残差结构的出现真正让卷积神经网络<strong>gooing deeper</strong>，通过残差结构可以达到152层(resnetv1的1202层效果并不是很好，resnetv2达到了1000层以上），这种结构的改进可以说是和BN一样具有网络通用性。那么大神是怎么想到这一点的呢，这篇论文的动机来自于作者观察到的一个普遍现象，在较深的卷积神经网络训练过程中精度会慢慢达到饱和然后快速退化，而这种退化不是因为过拟合(因为这种现象同样发生在训练阶段)或者梯度消失(作者在实验阶段证实了这一点)等原因造成。<br><a id="more"></a><br>&ensp;&ensp;&ensp;&ensp;在介绍这篇论文之前还需要搞清楚几个概念恒等映射(<strong>Identity Mapping</strong>)和残差(<strong>Residual</strong>)。<br>1.恒等映射<br>$$ G(x) = x $$<br>2.残差<br>$$ f(X) = b $$<br>假设x<sub>0</sub>是x的近似值，则残差为：<br>$$ b-x_0 $$<br>&ensp;&ensp;&ensp;&ensp;其实残差就是系统观测值和系统估计值的差值。<br>&ensp;&ensp;&ensp;&ensp;作者提出了一种假设如果深度较大的网络效果不好，那我们将一个已经训练好的浅层网络的参数复制到一个深度网络的浅层，再让深度网络的其它层保证恒等映射，那么这个深度网络的效果起码应该不比浅层网络差吧。</p>
+<p><div align="center"><img src="./images/resnetv1_1.png" width="300" height="300" align="center/"></div><br>&ensp;&ensp;&ensp;&ensp;但是这种恒等映射绝非将A网络的其它层的参数全都置为0，那样就成了恒等了而不是恒等映射了，所以作者就在寻找这种恒等映射的路上提出了残差结构，通过短路连接将残差引入到系统当中。</p>
+<p><div align="center"><img src="./images/resnetv1_2.png" width="300" height="300" align="center/"></div><br>&ensp;&ensp;&ensp;&ensp;上面的结构之所能称之为残差是因为恒等映射，输入为X，输出为H(X)=X，这里的输入X就是观测值，H(X)就是估计值。因为作者认为这样学习F(X)=0,比学习F(X)=X更容易，下面就通过一个不太恰当的例子说明一下：</p>
+<p>假设输入为X=10，分别通过两种映射F(X)=W和H(X)，得到的输出为11。<br>$$ F(X) = W_F &times; X $$<br>$$ H(X) = F(x) + x $$<br>$$ H(X) = W_H &times; X + X $$<br>则,W<sub>F</sub>为1.1，W<sub>H</sub>为0.1，假设真实值为y = 12，学习率为0.1，则通过反向传播链式法则，<br>$$ L_F = y - F(X) $$<br>$$ L_H = y - H(X) $$<br>$$ \frac{\partial L_F}{\partial W_F} = \frac{\partial L}{\partial F}·\frac{\partial F}{\partial W_F} = -X $$<br>$$ \frac{\partial L_H}{\partial W_H} = \frac{\partial L}{\partial H}·\frac{\partial H}{\partial W_H} = -X $$<br>$$ W_H = 0.1 + 10&times;0.1 = 1.1 $$<br>$$ W_F = 1.1 + 10&times;0.1 = 2.1 $$<br>&ensp;&ensp;&ensp;&ensp;从上式中我们能看出W<sub>H</sub>由原来的0.1变为了1.1增加了10倍，W<sub>F</sub>由原来的1.1变为了2.1。W<sub>H</sub>对于结果的变化更加敏感，这也就是作者为什么说学习F(X)=0,比学习F(X)=X更容易。<br>&ensp;&ensp;&ensp;&ensp;此外，作者提出了三种形式的残差网络结构，1.对于结构未改变的使用恒等映射，对于结构改变的使用0填充;2.对于结构未改变的使用恒等映射，对于网络结构改变的使用学习参数来改变维度;3.对于所有的结构都使用学习参数。实验结果表明第三种的效果最好，但是与第二种的差别也不是很大，第三种的参数也会相应增多论文所以采用了第二种方式并且每个卷积层之后都使用了BN。<br>参考：<br>  &ensp;<a href="https://arxiv.org/abs/1512.03385" target="_blank" rel="noopener">https://arxiv.org/abs/1512.03385</a><br>  &ensp;<a href="https://en.wikipedia.org/wiki/Residual_(numerical_analysis)" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Residual_(numerical_analysis)</a><br>   &ensp; <a href="https://zhuanlan.zhihu.com/p/32085715" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32085715</a><br> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
 
       
 
@@ -223,6 +222,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Resnet</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -273,7 +291,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/11/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/26/resnet/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -287,15 +305,20 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/19/inceptionv1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/26/densenet/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          inceptionv1论文笔记
+          Densenet论文笔记
         
       </div>
     </a>
   
+  
+    <a href="/2019/05/26/xception/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">xception论文笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

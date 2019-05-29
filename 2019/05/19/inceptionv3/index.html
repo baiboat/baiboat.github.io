@@ -6,19 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | Tshangs</title>
+  <title>inceptionv3论文笔记 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;在inceptionv2提出Batch-Normalization之后很大程度上加速了网络收敛，在inceptionv3中大量采用了卷积分解的方法来进一步减少计算量，并且提出了一些LSR方法来平滑标签来用预测概率来拟合真实概率。论文首先根据大量的实验提出了设计卷积神经网络的四个一般性原则：">
+<meta name="keywords" content="深度学习,目标分类,inceptionv3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/05/11/hello-world/index.html">
+<meta property="og:title" content="inceptionv3论文笔记">
+<meta property="og:url" content="http://yoursite.com/2019/05/19/inceptionv3/index.html">
 <meta property="og:site_name" content="Tshangs">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;在inceptionv2提出Batch-Normalization之后很大程度上加速了网络收敛，在inceptionv3中大量采用了卷积分解的方法来进一步减少计算量，并且提出了一些LSR方法来平滑标签来用预测概率来拟合真实概率。论文首先根据大量的实验提出了设计卷积神经网络的四个一般性原则：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-29T13:24:25.084Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/inceptionv3/images/inceptionv3_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/inceptionv3/images/inceptionv3_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/inceptionv3/images/inceptionv3_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/inceptionv3/images/inceptionv3_4.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/inceptionv3/images/inceptionv3_5.png">
+<meta property="og:updated_time" content="2019-05-19T15:03:31.501Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="inceptionv3论文笔记">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;在inceptionv2提出Batch-Normalization之后很大程度上加速了网络收敛，在inceptionv3中大量采用了卷积分解的方法来进一步减少计算量，并且提出了一些LSR方法来平滑标签来用预测概率来拟合真实概率。论文首先根据大量的实验提出了设计卷积神经网络的四个一般性原则：">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/19/inceptionv3/images/inceptionv3_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -154,41 +161,38 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-inceptionv3" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      inceptionv3论文笔记
     </h1>
   
 
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/11/hello-world/" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/19/inceptionv3/" class="pageViews">0</span>次
   </a>
 
         
-        <a href="/2019/05/11/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-11T09:04:31.009Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-11</time>
+        <a href="/2019/05/19/inceptionv3/" class="archive-article-date">
+  	<time datetime="2019-05-19T12:10:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p> &ensp;&ensp;&ensp;&ensp;在<strong>inceptionv2</strong>提出<strong>Batch-Normalization</strong>之后很大程度上加速了网络收敛，在<strong>inceptionv3</strong>中大量采用了卷积分解的方法来进一步减少计算量，并且提出了一些LSR方法来平滑标签来用预测概率来拟合真实概率。论文首先根据大量的实验提出了设计卷积神经网络的四个一般性原则：<br><a id="more"></a><br> 1.避免在较浅的层使用bottleneck结构，因为在较早的使用会造成信息压缩进而丢失有效信息。<br> 2.更高维度的表示在网络中更容易局部处理。因为经过更多的非线性激活提炼到的特征更加抽象也更加稀疏。<br> 3.空间聚合可以在较低维度嵌入上完成，而不会在表示能力上造成许多或任何损失。即使用1x1来先进行减少channel数量，再进行卷积不会造成不利影响，甚至会促进更快的学习。<br> 4.平衡网络的宽度和深度，通过平衡每个阶段的滤波器数量和网络的深度可以达到网络的最佳性能。<br> 论文中共提出了3中卷积分解的方式，每一种分解方式都作用在不同的阶段，即对应不同的特征图大小，三种不同的分解方式如下所示：<br> 1.将5x5分解为两个3x3<br> <div align="center"><img src="./images/inceptionv3_1.png" width="300" height="300" align="center/"></div><br> 2.将nxn分解为1xn和nx1的不对称卷积，采用这种分解在前面的层次上不能很好地工作，但是对于中等网格尺寸（在m×m特征图上，其中m范围在12到20之间），其给出了非常好的结果。在这个水平上，通过使用1×7卷积，然后是7×1卷积可以获得非常好的结果。<br> <div align="center"><img src="./images/inceptionv3_2.png" width="300" height="300" align="center/"></div><br> 3.具有扩展的滤波器组输出的<strong>Inception</strong>模块。这种架构被用于最粗糙的（8×8）网格，以提升高维表示，仅在最粗的网格上使用了此解决方案，因为这是产生高维度的地方，稀疏表示是最重要的，因为与空间聚合相比，局部处理（1×1 卷积）的比率增加。<br> <div align="center"><img src="./images/inceptionv3_3.png" width="300" height="300" align="center/"></div><br>&ensp;&ensp;&ensp;&ensp;接着论文提出了新的变换降维方式，将先卷积再通过池化的卷积方式变为卷积和池化同时进行最后进行concat的并行方式，这种方式可以在不损失信息的前提下减少计算资源。这种结构用在每一个inception组的第一个块来进行降维。<br> <div align="center"><img src="./images/inceptionv3_4.png" width="300" height="300" align="center/"></div><br>&ensp;&ensp;&ensp;&ensp;论文中提出了LSR（label smooth regulization），更改了一般交叉熵真实标签one-hot编码的方式，引入了平滑参数对one-hot编码进行调整，将其加上一个真实标签的先验分布。</p>
+<p>$$ P(k|x) = \frac{exp(Z_k)}{\sum_i^{i=k}exp(Z_i)} $$</p>
+<p>$$ loss = -\sum_{k=1}^{k}q(k|x)log(p(k|x)) $$</p>
+<p>$$ q’(k|x) = (1-\epsilon)\delta_{k,y}+\epsilon u(k)  $$<br>&ensp;&ensp;&ensp;&ensp;提出的LSR方法主要是针对对于损失函数需要用预测概率去拟合真实概率，而拟合one-hot的真实概率函数会带来两个问题：1)无法保证模型的泛化能力，容易造成过拟合；2) 全概率和0概率鼓励所属类别和其他类别之间的差距尽可能加大，而由梯度有界可知，这种情况很难adapt。会造成模型过于相信预测的类别。<br>&ensp;&ensp;&ensp;&ensp;inceptionv3中只使用了一个辅助分类器，因为原来设想的辅助分类器能够在浅层加快梯度回传来加速收敛的想法有误，作者发现发现辅助分类器在训练早期并没有导致改善收敛：在两个模型达到高精度之前，有无侧边网络的训练进度看起来几乎相同。接近训练结束，辅助分支网络开始超越没有任何分支的网络的准确性，达到了更高的稳定水平，所以去掉了浅层的分类器。作者认为辅助分类器起着正则化项的作用，由于如果侧分支是批标准化的或具有丢弃层，则网络的主分类器性能更好，这也为推测批标准化作为正则化项给出了一个弱支持证据。<br>&ensp;&ensp;&ensp;&ensp;最后提出的分类网络结构如下图：<br> <div align="center"><img src="./images/inceptionv3_5.png" width="900" height="300" align="center/"></div><br> &ensp;&ensp;&ensp;&ensp;</p>
+<p> $$ 5+3(block1module1)+3(block1module2)+3(block1module3)+3(block2module1)+ $$<br>$$ 5(block2module2)+5(block2module3)+5(block2module4)+5(block2module5)+ $$<br>$$ 4(block3module1)+3(block3module2)+3(block3module3)= 47 $$</p>
+<p>共47层，此处需要注意的是inception组的降维是在每一个inception组的第一个inception块进行的。<br> 参考：<br>  &ensp;<a href="https://arxiv.org/abs/1512.00567" target="_blank" rel="noopener">https://arxiv.org/abs/1512.00567</a><br>  &ensp;<a href="https://www.jianshu.com/p/3bbf0675cfce" target="_blank" rel="noopener">https://www.jianshu.com/p/3bbf0675cfce</a><br> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
 
       
 
@@ -223,6 +227,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">inceptionv3</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -273,7 +296,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/11/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/19/inceptionv3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -287,15 +310,20 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/19/inceptionv1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/26/xception/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          inceptionv1论文笔记
+          xception论文笔记
         
       </div>
     </a>
   
+  
+    <a href="/2019/05/19/inceptionv1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">inceptionv1论文笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
