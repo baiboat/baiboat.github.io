@@ -8,23 +8,23 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>res2net论文笔记 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; res2net提出了一种类残差的级联结构(hierarchical residual-like style)模块，并且规定了一种类似与resnext中基维度新的维度scale（Res2Net块中的特征组数量）。">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; res2net提出了一种类残差的级联结构(hierarchical residual-like style)模块，并且规定了一种类似与resnext中基维度新的维度scale（Res2Net块中的特征组数量）。   这种结构通过将残差模块里的1x1之后的通道进行分组，然后除第一个分组外，其它分组通过一个3x3的卷积并且以add方式连接到下一个分组。">
 <meta name="keywords" content="深度学习,目标分类,res2net">
 <meta property="og:type" content="article">
 <meta property="og:title" content="res2net论文笔记">
 <meta property="og:url" content="http://yoursite.com/2019/05/30/res2net/index.html">
 <meta property="og:site_name" content="Tshangs">
-<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; res2net提出了一种类残差的级联结构(hierarchical residual-like style)模块，并且规定了一种类似与resnext中基维度新的维度scale（Res2Net块中的特征组数量）。">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; res2net提出了一种类残差的级联结构(hierarchical residual-like style)模块，并且规定了一种类似与resnext中基维度新的维度scale（Res2Net块中的特征组数量）。   这种结构通过将残差模块里的1x1之后的通道进行分组，然后除第一个分组外，其它分组通过一个3x3的卷积并且以add方式连接到下一个分组。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/05/30/res2net/images/res2net_1.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/30/res2net/images/res2net_2.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/30/res2net/images/res2net_3.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/30/res2net/images/res2net_4.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/30/res2net/images/res2net_5.png">
-<meta property="og:updated_time" content="2019-05-30T14:24:47.032Z">
+<meta property="og:updated_time" content="2019-05-30T14:55:55.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="res2net论文笔记">
-<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; res2net提出了一种类残差的级联结构(hierarchical residual-like style)模块，并且规定了一种类似与resnext中基维度新的维度scale（Res2Net块中的特征组数量）。">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp; res2net提出了一种类残差的级联结构(hierarchical residual-like style)模块，并且规定了一种类似与resnext中基维度新的维度scale（Res2Net块中的特征组数量）。   这种结构通过将残差模块里的1x1之后的通道进行分组，然后除第一个分组外，其它分组通过一个3x3的卷积并且以add方式连接到下一个分组。">
 <meta name="twitter:image" content="http://yoursite.com/2019/05/30/res2net/images/res2net_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
@@ -187,7 +187,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&ensp;&ensp;&ensp;&ensp; <strong>res2net</strong>提出了一种类残差的级联结构(<strong>hierarchical residual-like style</strong>)模块，并且规定了一种类似与<strong>resnext</strong>中<strong>基维度</strong>新的维度<strong>scale</strong>（Res2Net块中的特征组数量）。<br><a id="more"></a></p>
+        <p>&ensp;&ensp;&ensp;&ensp; <strong>res2net</strong>提出了一种类残差的级联结构(<strong>hierarchical residual-like style</strong>)模块，并且规定了一种类似与<strong>resnext</strong>中<strong>基维度</strong>新的维度<strong>scale</strong>（Res2Net块中的特征组数量）。</p>
 <div align="center"><img src="./images/res2net_1.png" width="512" height="381" align="center/"></div>
 
 <p>这种结构通过将残差模块里的1x1之后的通道进行分组，然后除第一个分组外，其它分组通过一个3x3的卷积并且以<strong>add</strong>方式连接到下一个分组。最后将分组输出concat在一起，再通过一个1x1的卷积来整合组间信息。每次特征分割xj通过3×3卷积运算符时，输出结果可以具有比xj更大的接收场。 由于组合效应，<strong>Res2Net</strong>模块的输出包含不同数量和不同的感受野大小/比例组合。可以轻松地将建议的<strong>Res2Net</strong>模块集成到最先进的模型中，例如<strong>ResNet</strong> ，<strong>ResNeXt</strong>和<strong>DLA</strong> 。 相应的模型分别称为<strong>Res2Net</strong>，<strong>Res2NeXt</strong>和<strong>Res2Net-DLA</strong>。比如将<strong>res2net</strong>与<strong>SE-Block</strong>及<strong>resnext</strong>整合在一起的结构如下：</p>
@@ -567,15 +567,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,11 +579,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">res2net</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
               </li>
              
               <li class="article-tag-list-item">
