@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/05/26/dpn/images/DPN_2.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/26/dpn/images/DPN_3.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/26/dpn/images/DPN_4.png">
-<meta property="og:updated_time" content="2019-05-27T06:49:07.102Z">
+<meta property="og:updated_time" content="2019-05-30T15:17:46.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DPN论文笔记">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;DPN从HORNN的角度来分析了Resnet和Densenet,分析结果得出Resnet是权重共享的特殊情况下的Densenet,并且Resnet能够进行特征复用，而Densenet能够产生新的特征，最后结合这两个网络的特点提出了能够利用这两种特点的DPN双通道网络。">
@@ -192,10 +192,10 @@
 <p>$$ h^k = g^k[\sum_{t=0}^{k-1}f_t^k(h^t)] $$<br>将上式分步计算：</p>
 <p>$$ h^1 = g^1[f_0^1(h^0)] $$<br>$$ h^2 = g^2[f_0^2(h^0)+f_1^2(h^1)] $$<br>$$ h^3 = g^3[f_0^3(h^0)+f_1^3(h^1)+f_2^3(h^2)] $$</p>
 <p><div align="center"><img src="./images/DPN_2.png" width="800" height="500" align="center/"></div><br><strong>注</strong>：在<strong>Densenet</strong>中f<sub>t</sub><sup>k</sup>(·)表示连接的1x1的卷积核，且各不相同，g<sup>k</sup>(·)代表3x3的卷积核且各不相同。这里的等效与<strong>Resnext</strong>中的第一个等效一样，<strong>将多分支先分别进行1x1卷积再相加等效为对多分支先进行concat再进行1x1卷积</strong>。<br><strong>Resnet</strong>的一般形式：</p>
-<p>$$ r^k = \sum_{t=1}^{k-1}f_t(h^t) = r^(k-1) + f_{k-1}(h^{k-1}) $$<br>$$ h^k = g^k(r^k) $$<br>$$ r^0 = 0 $$<br>$$ r^k = r^(k-1) + f_{k-1}(h^{k-1}) = r^{k-1}+f_{k-1}(g^{k-1}r^{k-1}) = r^{k-1} + /phi^{k-1}(r^{k-1}) $$<br>&ensp;&ensp;&ensp;&ensp;其中前面三个式子构成了递推公式，且前提条件式f<sub>t</sub><sup>k</sup>(·)恒等于f<sub>t</sub>(·)，最后一个式子将<strong>Densenet</strong>的一般表达式化为了<strong>Resnet</strong>的一般形式。下面将前三个递推公式分步计算：</p>
+<p>$$ r^k = \sum_{t=1}^{k-1}f_t(h^t) = r^(k-1) + f_{k-1}(h^{k-1}) $$<br>$$ h^k = g^k(r^k) $$<br>$$ r^0 = 0 $$<br>$$ r^k = r^(k-1) + f_{k-1}(h^{k-1}) = r^{k-1}+f_{k-1}(g^{k-1}r^{k-1}) = r^{k-1} + &phi;^{k-1}(r^{k-1}) $$<br>&ensp;&ensp;&ensp;&ensp;其中前面三个式子构成了递推公式，且前提条件式f<sub>t</sub><sup>k</sup>(·)恒等于f<sub>t</sub>(·)，最后一个式子将<strong>Densenet</strong>的一般表达式化为了<strong>Resnet</strong>的一般形式。下面将前三个递推公式分步计算：</p>
 <p>$$ h^1 = g^1(r^1) $$<br>$$ r^1 = r^0 + f_0(h^0) $$<br>$$ h^1 = g^1(r^0 + f_0(h^0)) = g^1(f_0(h^0)) $$<br>$$ h^2 = g^2(r^2) $$<br>$$ r^2 = r^1 + f_1(h^1) = f_0(h^0) + f_1(h^1) $$<br>$$ h^2 = g^2(f_0(h^0)+f_1(h^1)) $$<br>$$ h^3 = g^3(r^3) $$<br>$$ r^3 = r^2 + f_2(h^2) = f_0(h^0) + f_1(h^1) + f_2(h^2) $$<br>$$ h^3 = g^3(f_0(h^0) + f_1(h^1) + f_2(h^2)) $$</p>
 <p><div align="center"><img src="./images/DPN_3.png" width="800" height="500" align="center/"></div><br>最后提出的<strong>DPN</strong>形式为：</p>
-<p>$$ x^k = \sum{t=1}{k-1}f_t^k(h^t) $$<br>$$ y^k = \sum{t=1}{k-1}V_t(h^t) = y^{k-1} + /phi^{k-1}(y^{k-1}) $$<br>$$ r^k = x^k + y^k $$<br>$$ h^k = g^k(r^k) $$</p>
+<p>$$ x^k = \sum{t=1}{k-1}f_t^k(h^t) $$<br>$$ y^k = \sum{t=1}{k-1}V_t(h^t) = y^{k-1} + &phi;^{k-1}(y^{k-1}) $$<br>$$ r^k = x^k + y^k $$<br>$$ h^k = g^k(r^k) $$</p>
 <p><div align="center"><img src="./images/DPN_4.png" width="800" height="500" align="center/"></div><br>最后论文以<strong>Resnext</strong>为主干网络，将输入通过1x1,3x3,1x1的瓶颈结构，并将最后的输出分为两部分，一部分add，一部分concat，还有我认为论文Fig2中带下划线的1x1卷积应该放在3x3之后。<br>参考：<br>  &ensp;<a href="https://arxiv.org/abs/1707.01629" target="_blank" rel="noopener">https://arxiv.org/abs/1707.01629</a><br> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
 
       
@@ -576,11 +576,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv3</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,11 +588,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv3</a>
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,11 +612,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shufflenetv2</a>
+                <a href="javascript:void(0)" class="js-tag color4">xception</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">xception</a>
+                <a href="javascript:void(0)" class="js-tag color3">shufflenetv2</a>
               </li>
             
             <div class="clearfix"></div>
