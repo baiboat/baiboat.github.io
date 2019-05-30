@@ -152,6 +152,133 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-res2net" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/30/res2net/">res2net论文笔记</a>
+    </h1>
+  
+
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/30/res2net/" class="pageViews">0</span>次
+  </a>
+
+        
+        <a href="/2019/05/30/res2net/" class="archive-article-date">
+  	<time datetime="2019-05-30T14:10:31.232Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&ensp;&ensp;&ensp;&ensp; <strong>res2net</strong>提出了一种类残差的级联结构(<strong>hierarchical residual-like style</strong>)模块，并且规定了一种类似与<strong>resnext</strong>中<strong>基维度</strong>新的维度<strong>scale</strong>（Res2Net块中的特征组数量）。</p>
+<div align="center"><img src="./images/res2net_1.png" width="512" height="381" align="center/"></div>
+
+<p>这种结构通过将残差模块里的1x1之后的通道进行分组，然后除第一个分组外，其它分组通过一个3x3的卷积并且以<strong>add</strong>方式连接到下一个分组。最后将分组输出concat在一起，再通过一个1x1的卷积来整合组间信息。每次特征分割xj通过3×3卷积运算符时，输出结果可以具有比xj更大的接收场。 由于组合效应，<strong>Res2Net</strong>模块的输出包含不同数量和不同的感受野大小/比例组合。可以轻松地将建议的<strong>Res2Net</strong>模块集成到最先进的模型中，例如<strong>ResNet</strong> ，<strong>ResNeXt</strong>和<strong>DLA</strong> 。 相应的模型分别称为<strong>Res2Net</strong>，<strong>Res2NeXt</strong>和<strong>Res2Net-DLA</strong>。比如将<strong>res2net</strong>与<strong>SE-Block</strong>及<strong>resnext</strong>整合在一起的结构如下：</p>
+<div align="center"><img src="./images/res2net_2.png" width="510" height="384" align="center/"></div>
+
+<p>在<strong>imagenet</strong>数据集上的分类test error如下：</p>
+<div align="center"><img src="./images/res2net_3.png" width="407" height="326" align="center/"></div>
+
+<p>其中每个网络的<strong>scale</strong>=4，并且作者通过实验得知这种网络的效果可以随着网络的深度加深而进一步提升。</p>
+<div align="center"><img src="./images/res2net_4.png" width="453" height="137" align="center/"></div>
+
+<p>类似于resnext的<strong>基维度</strong>通过增加<strong>scale</strong>维度，分类的准确率也会进一步提升：</p>
+<p><div align="center"><img src="./images/res2net_5.png" width="540" height="249" align="center/"></div><br>参考：<br>  &ensp;<a href="https://arxiv.org/abs/1904.01169" target="_blank" rel="noopener">https://arxiv.org/abs/1904.01169</a><br> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">res2net</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/30/res2net/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
+            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"mm"
+        });
+    }
+</script>
+  </section>
+
+
+  
     <article id="post-mobilenet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1196,122 +1323,6 @@
 
 
   
-    <article id="post-xception" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/26/xception/">xception论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/xception/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/26/xception/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:04:58.963Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&ensp;&ensp;&ensp;&ensp;<strong>Xception</strong>是<strong>Inception</strong>系列的最后一篇，其主要思想是建立在卷积的空间相关性和通道相关性是可以解耦的，论文对之前<strong>Inception</strong>系列的工作做出了分析，通过类比分析说明了<strong>Inception</strong>的结构其实始终是建立在这种假设之上的，最后采用了轻量级神经网络常采用的深度可分离卷积搭配残差结构，但是有意思的是<strong>Inception</strong>系列中只要用了残差结构的，在其论文中都会不同程度的diss残差结构，看来还是老郭说的对，只有同行之间才是赤裸裸的仇恨啊。<br>
-        
-          <a class="article-more-a" href="/2019/05/26/xception/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xception</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/26/xception/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1545,6 +1556,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">xception</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
               </li>
             
             <div class="clearfix"></div>
