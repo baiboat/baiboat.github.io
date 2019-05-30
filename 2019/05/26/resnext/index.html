@@ -18,8 +18,8 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/05/26/resnext/images/resnext_1.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/26/resnext/images/resnext_2.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/26/resnext/images/resnext_3_1.png">
-<meta property="og:updated_time" content="2019-05-26T16:32:16.240Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/26/resnext/images/resnext_3.png">
+<meta property="og:updated_time" content="2019-05-30T14:50:25.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Resnext论文笔记">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;作者结合VGG堆叠和Resnet短路连接的思想提出了更加简单的瓶颈同质多分支结构(即每个分支采用相同的瓶颈结构)和残差连接结构，并将这种分支的个数定义为一个新的维度cardinality(基),记做C，这也是Resnext名称的由来，next dimension。">
@@ -196,7 +196,7 @@
 <p>等效为：<br>[A<sub>1</sub>,A<sub>2</sub>] = [1 2 3 4],[B<sub>1</sub>,B<sub>2</sub>] = [1 2 3 4]<sup>T</sup>,</p>
 <p>$$ [A_1,A_2][B_1,B_2] =[1,2,3,4][1,2,3,4]^T = 30 $$</p>
 <p>2.分组卷积</p>
-<div align="center"><img src="./images/resnext_3_1.png" width="400" height="300" align="center/"></div>
+<div align="center"><img src="./images/resnext_3.png" width="400" height="300" align="center/"></div>
 
 <p>假设输入为D<sub>F</sub> x D<sub>F</sub> x M,输出为D<sub>F</sub> x D<sub>F</sub> x N,卷积核的大小为D<sub>K</sub> x D<sub>K</sub>,则组卷积可将计算量压缩为：</p>
 <p>$$ \frac{D_K&times;D_K&times;M&times;D_F&times;D_F&times;N}{(D_K&times;D_K&times;(M/g)&times;D_F&times;D_F&times;(N/g))&times;g}=\frac{1}{g} $$</p>
@@ -572,11 +572,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
+                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
+                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,7 +588,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -596,11 +596,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,15 +616,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
+                <a href="javascript:void(0)" class="js-tag color4">xception</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">shufflenetv2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">xception</a>
               </li>
             
             <div class="clearfix"></div>
