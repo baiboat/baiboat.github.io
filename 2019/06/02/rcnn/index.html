@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_1.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_2.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_3.png">
-<meta property="og:updated_time" content="2019-06-02T10:33:35.366Z">
+<meta property="og:updated_time" content="2019-06-02T10:34:54.389Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCNN论文笔记">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;目标检测是cv的一个重要领域，RCNN的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。">
@@ -197,7 +197,7 @@
 <p>3.对应ground truth的缩放和偏移值$t_{\ast}$<br>&ensp;&ensp;&ensp;&ensp; 对于窗口一般使用四维向量(x,y,w,h) 来表示， 分别表示窗口的中心点坐标和宽高。红色的框 P 代表原始的Proposal, 绿色的框 G 代表目标的 Ground Truth， 我们的目标是寻找一种关系使得输入原始的窗口 P 经过映射得到一个跟真实窗口 G 更接近的回归窗口Ĝ 。</p>
 <div align="center"><img src="./images/RCNN_3.png" width="328" height="319" align="center/"></div>
 
-<p>&ensp;&ensp;&ensp;&ensp; 边框回归的目的就是找到一种映射f,使得预测得到的建议框对应的坐标(P<sub>x</sub>,P<sub>y</sub>,P<sub>w</sub>,P<sub>h</sub>)通过f(P<sub>x</sub>,P<sub>y</sub>,P<sub>w</sub>,P<sub>h</sub>)=($\hat{G_x}$,$\hat{G_y}$},$\hat{G_w}$},$\hat{G_h}$)且($\hat{G_x}$,$\hat{G_y}$},$\hat{G_w}$},$\hat{G_h}$)&approx;(G<sub>x</sub>,G<sub>y</sub>,G<sub>w</sub>,G<sub>h</sub>)<br>&ensp;&ensp;&ensp;&ensp; 因此使用平移和缩放来得到这种映射关系，即在回归中要学习其预测框相对与真实框的平移值和缩放值：<br>$$ t_x = (G_x - P_x)/P_w $$<br>$$ t_y = (G_y - P_y)/P_h $$<br>$$ t_w = log(G_w/P_w) $$<br>$$ t_h = log(G_h/P_h) $$<br>&ensp;&ensp;&ensp;&ensp; 那么目标函数就可以用d<sub>&ast;</sub>P=W<sup>T</sup>&Phi;<sub>5</sub>(P),&Phi;<sub>5</sub>(P)对应建议框经过pooling 5输出的向量，d<sub>&ast;</sub>P是得到的预测值。回归的目的是让预测值与真实值的差距变小，其代价函数为：<br>$$ Loss = \sum_{i}^{N}(t_{\ast}^{i}-\hat{w_{\ast}}^{T}/phi_{5})^2 $$<br>&ensp;&ensp;&ensp;&ensp; 在得到d<sub>&ast;</sub>P之后，便可得到调整之后的($\hat{G_x}$,$\hat{G_y}$},$\hat{G_w}$},$\hat{G_h}$)：<br>$$ \hat{G_x} = P_wd_x(P) + P_x  $$<br>$$ \hat{G_y} = P_hd_y(P) + P_y  $$<br>$$ \hat{G_w} = P_wexp(d_w(P))  $$<br>$$ \hat{G_h} = P_hexp(d_h(P))  $$</p>
+<p>&ensp;&ensp;&ensp;&ensp; 边框回归的目的就是找到一种映射f,使得预测得到的建议框对应的坐标(P<sub>x</sub>,P<sub>y</sub>,P<sub>w</sub>,P<sub>h</sub>)通过f(P<sub>x</sub>,P<sub>y</sub>,P<sub>w</sub>,P<sub>h</sub>)=($\hat{G_x}$,$\hat{G_y}$},$\hat{G_w}$},$\hat{G_h}$)且($\hat{G_x}$,$\hat{G_y}$},$\hat{G_w}$},$\hat{G_h}$)&approx;(G<sub>x</sub>,G<sub>y</sub>,G<sub>w</sub>,G<sub>h</sub>)<br>&ensp;&ensp;&ensp;&ensp; 因此使用平移和缩放来得到这种映射关系，即在回归中要学习其预测框相对与真实框的平移值和缩放值：<br>$$ t_x = (G_x - P_x)/P_w $$<br>$$ t_y = (G_y - P_y)/P_h $$<br>$$ t_w = log(G_w/P_w) $$<br>$$ t_h = log(G_h/P_h) $$<br>&ensp;&ensp;&ensp;&ensp; 那么目标函数就可以用d<sub>&ast;</sub>P=W<sup>T</sup>&Phi;<sub>5</sub>(P),&Phi;<sub>5</sub>(P)对应建议框经过pooling 5输出的向量，d<sub>&ast;</sub>P是得到的预测值。回归的目的是让预测值与真实值的差距变小，其代价函数为：<br>$$ Loss = \sum_{i}^{N}(t_{\ast}^{i}-\hat{w_{\ast}}^{T}/phi_{5})^2 $$<br>&ensp;&ensp;&ensp;&ensp; 在得到d<sub>&ast;</sub>P之后，便可得到调整之后的($\hat{G_x}$,$\hat{G_y}$},$\hat{G_w}$,$\hat{G_h}$)：<br>$$ \hat{G_x} = P_wd_x(P) + P_x  $$<br>$$ \hat{G_y} = P_hd_y(P) + P_y  $$<br>$$ \hat{G_w} = P_wexp(d_w(P))  $$<br>$$ \hat{G_h} = P_hexp(d_h(P))  $$</p>
 <ol start="4">
 <li><strong>standard hard negative mining method</strong><br>&ensp;&ensp;&ensp;&ensp; 在训练过程中会出现正样本的数量远远小于负样本，这样训练出来的分类器的效果总是有限的，会出现许多false positive。采取办法可以是，先将正样本与一部分的负样本投入模型进行训练，然后将训练出来的模型去预测剩下未加入训练过程的负样本，当负样本被预测为正样本时，则它就为false positive，就把它加入训练的负样本集，进行下一次训练，知道模型的预测精度不再提升这就好比错题集，做错了一道题，把它加入错题集进行学习，学会了这道题，成绩就能得到稍微提升，把自己的错题集都学过去，成绩就达到了相对最优。<br>5.非极大值抑制（Non-Maximum Suppression，NMS）<br>&ensp;&ensp;&ensp;&ensp; 目标检测的过程中在同一目标的位置上会产生大量的候选框，这些候选框相互之间可能会有重叠，此时需要利用非极大值抑制找到最佳的目标边界框，消除冗余的边界框。假设已经有了目标边界框列表及其对应的置信度得分列表，设定阈值，阈值用来删除重叠较大的边界框。其计算流程为1）将目标边界框列表根据置信度得分进行排序；2）选择置信度最高的比边界框添加到最终输出列表中，将其从边界框列表中删除；3）计算置信度最高的边界框与其它候选框的IoU；4）删除IoU大于阈值的边界框。然后重复这一过程直至边界框列表为空。</li>
 </ol>
@@ -578,11 +578,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">condensenet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -590,7 +602,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,11 +614,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+                <a href="javascript:void(0)" class="js-tag color1">SENET</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
+                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,19 +626,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SENET</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
               <li class="article-tag-list-item">
