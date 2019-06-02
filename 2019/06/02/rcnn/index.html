@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_1.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_2.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_3.png">
-<meta property="og:updated_time" content="2019-06-02T10:45:34.789Z">
+<meta property="og:updated_time" content="2019-06-02T11:09:14.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCNN论文笔记">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;目标检测是cv的一个重要领域，RCNN的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。">
@@ -188,7 +188,7 @@
         <p>&ensp;&ensp;&ensp;&ensp;目标检测是<strong>cv</strong>的一个重要领域，<strong>RCNN</strong>的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。<br><a id="more"></a><br>&ensp;&ensp;&ensp;&ensp;接下来从<strong>RCNN</strong>的训练和检测两个阶段来介绍一下其基本流程：</p>
 <h6 id="一-训练阶段（假设网络的backbone为Alexnet）"><a href="#一-训练阶段（假设网络的backbone为Alexnet）" class="headerlink" title="一.训练阶段（假设网络的backbone为Alexnet）"></a>一.训练阶段（假设网络的<strong>backbone</strong>为<strong>Alexnet</strong>）</h6><p>1.在<strong>Imagenet</strong>数据集上对<strong>Alexnet</strong>进行预训练，这时最后的分类为1000类。<br>2.使用<strong>PASCALVOC 2007</strong>数据集来进行<strong>fine-tune</strong>。<br>&ensp;&ensp;&ensp;&ensp;1）首先使用<strong>selective search</strong>方法从每张图片中提取出2000个建议框，并将每个建议框与该张图片中的所有<strong>groung truth</strong>计算<strong>IOU</strong>，这时分两种情况，第一种计算得到的<strong>IOU</strong>列表中有的大于0.5，有的小于0.5，则将该建议框的<strong>Label</strong>标为大于0.5中的最大值所对应的<strong>ground truth</strong>的<strong>Label</strong>，第二种计算得到的<strong>IOU</strong>列表中的所有值都小于<strong>0.5</strong>，则将其<strong>Label</strong>设置为<strong>negative</strong>。这时可以建立两个文件夹，第一个文件夹保存正样本，其文件夹下可按类别分为多个自文件夹。第二个文件夹中保存负样本。<br>&ensp;&ensp;&ensp;&ensp;2）预处理，这时共得到N&times;2000个建议框（假设有N张图片），然后对所有的建议框进行resize处理，使用各向异性变形Padding=16（padding的值为建议框像素平均值）对N&times;2000个建议框进行处理最后每个大小为227&times;227（为了符合Alexnet输入大小），并且减去该建议框像素平均值。<br>&ensp;&ensp;&ensp;&ensp;3）进行<strong>fine-tune</strong>，每个mini-batch取32个正样本（包含所有类别），96个负样本，共128个样例进行训练，此时将最后的分类输出由1000类改为21类（PASCALVOC 2007中共有20类再加上背景类）。<br>3.训练SVM分类器<br>&ensp;&ensp;&ensp;&ensp;SVM需要为每一个类训练一个分类器，有20类，则共需20个SVM，每一个SVM都是一个2分类，此时可以将ground truth的按类分文件夹分别存储，然后再使用selective search方法对每一张图片生成建议框，将所有IOU小于0.3的建议框的Label标为negative，并将其保存在一个负例文件夹下（当然可以在步骤2的第一步就预先保存下来）。然后分别使用每一类的ground truth为positives和得到的negtive分别使用<strong>standard hard negative mining method</strong>方法训练20个SVM，这个过程首先需要将预处理之后的positives和negtive送入步骤2中已经fine-tune的Alexnet分类器，并将每个全连接的输出保存，即每个positives和negtive样例得到4096&times;1维的向量，然后在用其作为SVM的输入，每个SVM得到一个维度为1的输出（例如分数大于0.5的为positive，反之为negtive）。<br>4.训练<strong>BBox</strong>回归<br>&ensp;&ensp;&ensp;&ensp;与训练SVM一样，对每一个目标类分别训练一个BBox回归模型，共20个<strong>BBox</strong>回归模型，首先使用selective search方法得到每一类IOU大于0.6的建议框，并计算这些建议框与其对应的<strong>ground truth</strong>的缩放和偏移值t<sub>&ast;</sub>，并按照分类文件夹保存，然后将每一个建议框经过预处理后送入步骤2中<strong>fine-tune</strong>后的<strong>Alexnet</strong>,得到每一个<strong>pooling 5</strong>之后的6&times;6&times;256的特征张量，然后将每一个(特征张量，t<sub>&ast;</sub>)送入回归模型进行训练。</p>
 <h6 id="二-测试阶段"><a href="#二-测试阶段" class="headerlink" title="二.测试阶段"></a>二.测试阶段</h6><p>&ensp;&ensp;&ensp;&ensp;对每一张输入图片进行selective search产生2000个建议框，经过预处理之后送入训练好的Alexnet，得到2000&times;4096维的输出向量，将其与得到的输入为4096&times;1的20个分类进行计算，得到2000&times;20的输出，然后对每一类进行NMS处理去掉冗余框，并将剩下的建议框送入Alexnet得到pooling 5后的特征张量，送入该类对应的BBox回归模型得到最后的位置信息。</p>
-<h6 id="三-概念解释"><a href="#三-概念解释" class="headerlink" title="三.概念解释"></a>三.概念解释</h6><p>1.<strong>IOU</strong><br>&ensp;&ensp;&ensp;&ensp;IOU的计算基于Jaccard相似系数，其主要衡量了两个边界框的重叠率。它的计算需要真实框B<sub>gt</sub>和预测框B<sub>p</sub>这两个值的参与，通过计算IOU值就可以判定一个检测是<strong>TP</strong>（True Positive）还是<strong>FP</strong>（False Positive）。IOU的值可以通过计算真实框和预测框交集和并集的比值得到：<br>$$ IOU = /frac{area({B_{gt}}\bigcap{B_p})}{area({B_{gt}}\bigcup{B_p})} $$</p>
+<h6 id="三-概念解释"><a href="#三-概念解释" class="headerlink" title="三.概念解释"></a>三.概念解释</h6><p>1.<strong>IOU</strong><br>&ensp;&ensp;&ensp;&ensp;IOU的计算基于Jaccard相似系数，其主要衡量了两个边界框的重叠率。它的计算需要真实框B<sub>gt</sub>和预测框B<sub>p</sub>这两个值的参与，通过计算IOU值就可以判定一个检测是<strong>TP</strong>（True Positive）还是<strong>FP</strong>（False Positive）。IOU的值可以通过计算真实框和预测框交集和并集的比值得到：<br>$$ IOU = \frac{area({B_{gt}}\bigcap{B_p})}{area({B_{gt}}\bigcup{B_p})} $$</p>
 <div align="center"><img src="./images/RCNN_1.png" width="391" height="234" align="center/"></div>
 
 <p>&ensp;&ensp;&ensp;&ensp;一般而言，在判定一个检测目标是TP还是FP时会设定一个置信度阈值，当IOU值超过这个阈值时，判定其为TP，反之，则为FP。此外，当某个真实框没有被检测出时定义其为FN（False Negative）。<br>2.各向异性变形Padding=16<br>&ensp;&ensp;&ensp;&ensp;作者共提出了四种变形方式：<br>&ensp;&ensp;&ensp;&ensp;1）考虑context【图像中context指RoI周边像素】的各向同性变形，建议框像周围像素扩充到227×227，若遇到图像边界则用建议框像素均值填充，下图第二列；<br>&ensp;&ensp;&ensp;&ensp;2）不考虑context的各向同性变形，直接用建议框像素均值填充至227×227，下图第三列；<br>&ensp;&ensp;&ensp;&ensp;3）各向异性变形，简单粗暴对图像就行缩放至227×227，下图第四列；<br>&ensp;&ensp;&ensp;&ensp;4）变形前先进行边界像素填充【padding】处理，即向外扩展建议框边界，以上三种方法中分别采用padding=0下图第一行，padding=16下图第二行进行处理；<br>经过作者一系列实验表明采用padding=16的各向异性变形即下图第二行第三列效果最好，能使mAP提升3-5%。 </p>
@@ -573,10 +573,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">condensenet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
               </li>
              
@@ -585,11 +581,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
+                <a href="javascript:void(0)" class="js-tag color2">condensenet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,15 +593,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
+                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -617,6 +605,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
@@ -625,7 +621,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
+                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -633,11 +629,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sppnet</a>
+                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">xception</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sppnet</a>
               </li>
             
             <div class="clearfix"></div>
