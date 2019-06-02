@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Tshangs</title>
+  <title>RCNN论文笔记 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tshangs">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;目标检测是cv的一个重要领域，RCNN的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。">
+<meta name="keywords" content="深度学习,目标检测,RCNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RCNN论文笔记">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/rcnn/index.html">
 <meta property="og:site_name" content="Tshangs">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;目标检测是cv的一个重要领域，RCNN的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_3.png">
+<meta property="og:updated_time" content="2019-06-02T08:22:33.731Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tshangs">
+<meta name="twitter:title" content="RCNN论文笔记">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;目标检测是cv的一个重要领域，RCNN的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/02/rcnn/images/RCNN_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -150,31 +159,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-rcnn" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/02/rcnn/" class="archive-article-date">
-  	<time datetime="2019-06-02T07:17:56.063Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/02/rcnn/">RCNN论文笔记</a>
+    <h1 class="article-title" itemprop="name">
+      RCNN论文笔记
     </h1>
   
 
@@ -184,8 +176,70 @@
       <i class="icon-smile icon"></i> 阅读数:<span id="/2019/06/02/rcnn/" class="pageViews">0</span>次
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/06/02/rcnn/" class="archive-article-date">
+  	<time datetime="2019-06-02T07:17:56.063Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&ensp;&ensp;&ensp;&ensp;目标检测是<strong>cv</strong>的一个重要领域，<strong>RCNN</strong>的出现将目标检测的准确率提高了一个档次，虽然其过程较为复杂和繁琐，现在早已被其它网络所替代，但其中的一些思想一直被其它网络所借鉴。<br><a id="more"></a><br>&ensp;&ensp;&ensp;&ensp;接下来从<strong>RCNN</strong>的训练和检测两个阶段来介绍一下其基本流程：</p>
+<h6 id="一-训练阶段（假设网络的backbone为Alexnet）"><a href="#一-训练阶段（假设网络的backbone为Alexnet）" class="headerlink" title="一.训练阶段（假设网络的backbone为Alexnet）"></a>一.训练阶段（假设网络的<strong>backbone</strong>为<strong>Alexnet</strong>）</h6><p>1.在<strong>Imagenet</strong>数据集上对<strong>Alexnet</strong>进行预训练，这时最后的分类为1000类。<br>2.使用<strong>PASCALVOC 2007</strong>数据集来进行<strong>fine-tune</strong>。<br>&ensp;&ensp;&ensp;&ensp;1）首先使用<strong>selective search</strong>方法从每张图片中提取出2000个建议框，并将每个建议框与该张图片中的所有<strong>groung truth</strong>计算<strong>IOU</strong>，这时分两种情况，第一种计算得到的<strong>IOU</strong>列表中有的大于0.5，有的小于0.5，则将该建议框的<strong>Label</strong>标为大于0.5中的最大值所对应的<strong>ground truth</strong>的<strong>Label</strong>，第二种计算得到的<strong>IOU</strong>列表中的所有值都小于<strong>0.5</strong>，则将其<strong>Label</strong>设置为<strong>negative</strong>。这时可以建立两个文件夹，第一个文件夹保存正样本，其文件夹下可按类别分为多个自文件夹。第二个文件夹中保存负样本。<br>&ensp;&ensp;&ensp;&ensp;2）预处理，这时共得到N&times;2000个建议框（假设有N张图片），然后对所有的建议框进行resize处理，使用各向异性变形Padding=16（padding的值为建议框像素平均值）对N&times;2000个建议框进行处理最后每个大小为227&times;227（为了符合Alexnet输入大小），并且减去该建议框像素平均值。<br>&ensp;&ensp;&ensp;&ensp;3）进行<strong>fine-tune</strong>，每个mini-batch取32个正样本（包含所有类别），96个负样本，共128个样例进行训练，此时将最后的分类输出由1000类改为21类（PASCALVOC 2007中共有20类再加上背景类）。<br>3.训练SVM分类器<br>&ensp;&ensp;&ensp;&ensp;SVM需要为每一个类训练一个分类器，有20类，则共需20个SVM，每一个SVM都是一个2分类，此时可以将ground truth的按类分文件夹分别存储，然后再使用selective search方法对每一张图片生成建议框，将所有IOU小于0.3的建议框的Label标为negative，并将其保存在一个负例文件夹下（当然可以在步骤2的第一步就预先保存下来）。然后分别使用每一类的ground truth为positives和得到的negtive分别使用<strong>standard hard negative mining method</strong>方法训练20个SVM，这个过程首先需要将预处理之后的positives和negtive送入步骤2中已经fine-tune的Alexnet分类器，并将每个全连接的输出保存，即每个positives和negtive样例得到4096&times;1维的向量，然后在用其作为SVM的输入，每个SVM得到一个维度为1的输出（例如分数大于0.5的为positive，反之为negtive）。<br>4.训练<strong>BBox</strong>回归<br>&ensp;&ensp;&ensp;&ensp;与训练SVM一样，对每一个目标类分别训练一个BBox回归模型，共20个<strong>BBox</strong>回归模型，首先使用selective search方法得到每一类IOU大于0.6的建议框，并计算这些建议框与其对应的<strong>ground truth</strong>的缩放和偏移值t<sub>&ast;</sub>，并按照分类文件夹保存，然后将每一个建议框经过预处理后送入步骤2中<strong>fine-tune</strong>后的<strong>Alexnet</strong>,得到每一个<strong>pooling 5</strong>之后的6&times;6&times;256的特征张量，然后将每一个(特征张量，t<sub>&ast;</sub>)送入回归模型进行训练。</p>
+<h6 id="二-测试阶段"><a href="#二-测试阶段" class="headerlink" title="二.测试阶段"></a>二.测试阶段</h6><p>&ensp;&ensp;&ensp;&ensp;对每一张输入图片进行selective search产生2000个建议框，经过预处理之后送入训练好的Alexnet，得到2000&times;4096维的输出向量，将其与得到的输入为4096&times;1的20个分类进行计算，得到2000&times;20的输出，然后对每一类进行NMS处理去掉冗余框，并将剩下的建议框送入Alexnet得到pooling 5后的特征张量，送入该类对应的BBox回归模型得到最后的位置信息。</p>
+<h6 id="三-概念解释"><a href="#三-概念解释" class="headerlink" title="三.概念解释"></a>三.概念解释</h6><p>1.<strong>IOU</strong><br>&ensp;&ensp;&ensp;&ensp;IOU的计算基于Jaccard相似系数，其主要衡量了两个边界框的重叠率。它的计算需要真实框B<sub>gt</sub>和预测框B<sub>p</sub>这两个值的参与，通过计算IOU值就可以判定一个检测是<strong>TP</strong>（True Positive）还是<strong>FP</strong>（False Positive）。IOU的值可以通过计算真实框和预测框交集和并集的比值得到：<br>$$ IOU = \frac{area({B_{gt}}\bigcap{B_p})}{area({B_{gt}}\bigcup{B_p})} $$</p>
+<div align="center"><img src="./images/RCNN_1.png" width="391" height="234" align="center/"></div>
+
+<p>&ensp;&ensp;&ensp;&ensp;一般而言，在判定一个检测目标是TP还是FP时会设定一个置信度阈值，当IOU值超过这个阈值时，判定其为TP，反之，则为FP。此外，当某个真实框没有被检测出时定义其为FN（False Negative）。<br>2.各向异性变形Padding=16<br>&ensp;&ensp;&ensp;&ensp;作者共提出了四种变形方式：<br>&ensp;&ensp;&ensp;&ensp;1）考虑context【图像中context指RoI周边像素】的各向同性变形，建议框像周围像素扩充到227×227，若遇到图像边界则用建议框像素均值填充，下图第二列；<br>&ensp;&ensp;&ensp;&ensp;2）不考虑context的各向同性变形，直接用建议框像素均值填充至227×227，下图第三列；<br>&ensp;&ensp;&ensp;&ensp;3）各向异性变形，简单粗暴对图像就行缩放至227×227，下图第四列；<br>&ensp;&ensp;&ensp;&ensp;4）变形前先进行边界像素填充【padding】处理，即向外扩展建议框边界，以上三种方法中分别采用padding=0下图第一行，padding=16下图第二行进行处理；<br>经过作者一系列实验表明采用padding=16的各向异性变形即下图第二行第三列效果最好，能使mAP提升3-5%。 </p>
+<div align="center"><img src="./images/RCNN_2.png" width="633" height="343" align="center/"></div>
+
+<p>3.对应ground truth的缩放和偏移值t<sub>&ast;</sub><br>&ensp;&ensp;&ensp;&ensp; 对于窗口一般使用四维向量(x,y,w,h) 来表示， 分别表示窗口的中心点坐标和宽高。红色的框 P 代表原始的Proposal, 绿色的框 G 代表目标的 Ground Truth， 我们的目标是寻找一种关系使得输入原始的窗口 P 经过映射得到一个跟真实窗口 G 更接近的回归窗口Ĝ 。</p>
+<div align="center"><img src="./images/RCNN_3.png" width="325" height="322" align="center/"></div>
+
+<p>&ensp;&ensp;&ensp;&ensp; 边框回归的目的就是找到一种映射f,使得预测得到的建议框对应的坐标(P<sub>x</sub>,P<sub>y</sub>,P<sub>w</sub>,P<sub>h</sub>)通过f(P<sub>x</sub>,P<sub>y</sub>,P<sub>w</sub>,P<sub>h</sub>)=($\hat{G_x}$,$\hat{G_y}$,$\hat{G_w}$,$\hat{G_h}$)且($\hat{G_x}$,$\hat{G_y}$,$\hat{G_w}$,$\hat{G_h}$)&approx;(G<sub>x</sub>,G<sub>y</sub>,G<sub>w</sub>,G<sub>h</sub>)<br>&ensp;&ensp;&ensp;&ensp; 因此使用平移和缩放来得到这种映射关系，即在回归中要学习其预测框相对与真实框的平移值和缩放值：<br>$$ t_x = (G_x - P_x)/P_w $$<br>$$ t_y = (G_y - P_y)/P_h $$<br>$$ t_w = log(G_{w}/P_{w}) $$<br>$$ t_h = log(G_{h}/P_{h}) $$<br>&ensp;&ensp;&ensp;&ensp; 那么目标函数就可以用d<sub>&ast;</sub>P=W<sup>T</sup>&Phi;<sub>5</sub>(P),&Phi;<sub>5</sub>(P)对应建议框经过pooling 5输出的向量，d<sub>*</sub>P是得到的预测值。回归的目的是让预测值与真实值的差距变小，其代价函数为：</p>
+<p>$$ Loss = \sum_{I}^{N}(t_{\ast}^i - w_{\ast}^T \phi_{5}(P_i))^2 $$</p>
+<p>&ensp;&ensp;&ensp;&ensp;在得到d<sub>&ast;</sub>P之后，便可得到调整之后的($\hat{G_x}$,$\hat{G_y}$,$\hat{G_w}$,$\hat{G_h}$)：</p>
+<p>$$ \hat{G_x} = P_{w}d_{x}(P) + P_{x} $$</p>
+<p>$$ \hat{G_y} = P_{h}d_{y}(P) + P_{y} $$</p>
+<p>$$ \hat{G_w} = P_{w}exp(d_{w}(P)) $$</p>
+<p>$$ \hat{G_h} = P_{h}exp(d_{h}(P)) $$</p>
+<p>4.<strong>standard hard negative mining method</strong><br>&ensp;&ensp;&ensp;&ensp; 在训练过程中会出现正样本的数量远远小于负样本，这样训练出来的分类器的效果总是有限的，会出现许多false positive。采取办法可以是，先将正样本与一部分的负样本投入模型进行训练，然后将训练出来的模型去预测剩下未加入训练过程的负样本，当负样本被预测为正样本时，则它就为false positive，就把它加入训练的负样本集，进行下一次训练，知道模型的预测精度不再提升这就好比错题集，做错了一道题，把它加入错题集进行学习，学会了这道题，成绩就能得到稍微提升，把自己的错题集都学过去，成绩就达到了相对最优。<br>参考：<br>  &ensp;<a href="https://arxiv.org/abs/1311.2524v3" target="_blank" rel="noopener">https://arxiv.org/abs/1311.2524v3</a><br>  &ensp;<a href="https://blog.csdn.net/zijin0802034/article/details/77685438" target="_blank" rel="noopener">https://blog.csdn.net/zijin0802034/article/details/77685438</a><br>  &ensp;<a href="https://github.com/Liu-Yicheng/R-CNN" target="_blank" rel="noopener">https://github.com/Liu-Yicheng/R-CNN</a><br>  &ensp;<a href="https://blog.csdn.net/qq_33221533/article/details/81312880" target="_blank" rel="noopener">https://blog.csdn.net/qq_33221533/article/details/81312880</a></p>
+<p> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -205,491 +259,132 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/02/rcnn/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/01/condensenet/" class="archive-article-date">
-  	<time datetime="2019-05-31T16:14:04.090Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/06/01/condensenet/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">condensenet论文笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/01/condensenet/">condensenet论文笔记</a>
-    </h1>
+  
   
 
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/06/01/condensenet/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">condensenet</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/30/res2net/" class="archive-article-date">
-  	<time datetime="2019-05-30T14:10:31.232Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-30</time>
-</a>
-        </div>
-    	 
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/30/res2net/">res2net论文笔记</a>
-    </h1>
+
   
 
 
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/30/res2net/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">res2net</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/mobilenet/" class="archive-article-date">
-  	<time datetime="2019-05-29T12:51:22.155Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/mobilenet/">mobilenet论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/29/mobilenet/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">mobilenet</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/mobilenetv2/" class="archive-article-date">
-  	<time datetime="2019-05-29T12:51:04.983Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/mobilenetv2/">mobilenetv2论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/29/mobilenetv2/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">mobilenetv2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/shufflenetv1/" class="archive-article-date">
-  	<time datetime="2019-05-29T12:50:48.644Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/shufflenetv1/">shufflenetv1论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/29/shufflenetv1/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">shufflenetv1</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/shufflenetv2/" class="archive-article-date">
-  	<time datetime="2019-05-29T12:50:33.610Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/shufflenetv2/">shufflenetv2论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/29/shufflenetv2/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">shufflenetv2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/senet/" class="archive-article-date">
-  	<time datetime="2019-05-29T12:50:12.131Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/senet/">SENET论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/29/senet/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SENET</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/26/dpn/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:06:08.977Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/26/dpn/">DPN论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/dpn/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DPN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/26/resnext/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:05:56.298Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/26/resnext/">Resnext论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/resnext/" class="pageViews">0</span>次
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Resnext</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
-  
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
+            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"mm"
+        });
+    }
+</script>
+  </section>
 
 
           </div>
@@ -712,8 +407,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
