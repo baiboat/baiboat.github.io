@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tshangs</title>
+  <title>sppnet论文笔记 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tshangs">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;深度卷积神经网络（CNNs）都需要输入的图像尺寸固定（比如224×224）。这种人为的需要导致面对任意尺寸和比例的图像或子图像时会降低识别的精度(因为要经过crop/warp)。sppnet提出了一种“空间金字塔池化”(spatial pyramid pooling)的池化策略以消除上述限制。这种方式可以普遍帮助改进各类基于CNN的图像分类方法并且可">
+<meta name="keywords" content="深度学习,目标检测,sppnet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sppnet论文笔记">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/sppnet/index.html">
 <meta property="og:site_name" content="Tshangs">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;深度卷积神经网络（CNNs）都需要输入的图像尺寸固定（比如224×224）。这种人为的需要导致面对任意尺寸和比例的图像或子图像时会降低识别的精度(因为要经过crop/warp)。sppnet提出了一种“空间金字塔池化”(spatial pyramid pooling)的池化策略以消除上述限制。这种方式可以普遍帮助改进各类基于CNN的图像分类方法并且可">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/sppnet/images/sppnet_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/sppnet/images/sppnet_2.png">
+<meta property="og:updated_time" content="2019-06-02T10:21:30.997Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tshangs">
+<meta name="twitter:title" content="sppnet论文笔记">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;深度卷积神经网络（CNNs）都需要输入的图像尺寸固定（比如224×224）。这种人为的需要导致面对任意尺寸和比例的图像或子图像时会降低识别的精度(因为要经过crop/warp)。sppnet提出了一种“空间金字塔池化”(spatial pyramid pooling)的池化策略以消除上述限制。这种方式可以普遍帮助改进各类基于CNN的图像分类方法并且可">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/02/sppnet/images/sppnet_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -150,42 +158,72 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-resnext" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-sppnet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/26/resnext/">Resnext论文笔记</a>
+    <h1 class="article-title" itemprop="name">
+      sppnet论文笔记
     </h1>
   
 
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/resnext/" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/06/02/sppnet/" class="pageViews">0</span>次
   </a>
 
         
-        <a href="/2019/05/26/resnext/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:05:56.298Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
+        <a href="/2019/06/02/sppnet/" class="archive-article-date">
+  	<time datetime="2019-06-02T10:21:30.997Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&ensp;&ensp;&ensp;&ensp;作者结合<strong>VGG</strong>堆叠和<strong>Resnet</strong>短路连接的思想提出了更加简单的瓶颈同质多分支结构(即每个分支采用相同的瓶颈结构)和残差连接结构，并将这种分支的个数定义为一个新的维度<strong>cardinality(基)</strong>,记做<strong>C</strong>，这也是<strong>Resnext</strong>名称的由来，<strong>next dimension</strong>。<br>
-        
-          <a class="article-more-a" href="/2019/05/26/resnext/#more">more >></a>
-        
+        <p>&ensp;&ensp;&ensp;&ensp;深度卷积神经网络（CNNs）都需要输入的图像尺寸固定（比如224×224）。这种人为的需要导致面对任意尺寸和比例的图像或子图像时会降低识别的精度(因为要经过<strong>crop/warp</strong>)。<strong>sppnet</strong>提出了一种“空间金字塔池化”(<strong>spatial pyramid pooling</strong>)的池化策略以消除上述限制。这种方式可以普遍帮助改进各类基于CNN的图像分类方法并且可以提升<strong>RCNN</strong>的检测速度。<br><a id="more"></a><br>&ensp;&ensp;&ensp;&ensp;CNN主要由两部分组成，卷积部分和其后的全连接部分。卷积部分通过滑窗进行计算，并输出代表激活的空间排列的特征图（feature map）。事实上，卷积并不需要固定的图像尺寸，他可以产生任意尺寸的特征图。而另一方面，根据定义，全连接层则需要固定的尺寸输入。因此固定尺寸的问题来源于全连接层，也是网络的最后阶段。引入一种空间金字塔池化( spatial pyramid pooling，SPP)层以移除对网络固定尺寸的限制。特别地，<strong>将SPP层放在最后一个卷积层之后</strong>。SPP层对特征图进行池化，并产生固定长度的输出，这个输出再喂给全连接层（或其他分类器）。换句话说，在网络层次的较后阶段（也就是卷积层和全连接层之间）进行某种信息“汇总”，可以避免在最开始的时候就进行裁剪crop或变形warp。对深度CNNs而言，SPP有几个突出的优点：1）SPP能在输入尺寸任意的情况下产生固定大小的输出，而以前的深度网络中的滑窗池化(sliding window pooling)则不能；2）SPP使用了多层空间箱(<strong>bin</strong>)，而滑窗池化则只用了一个窗口尺寸。多级池化对于物体的变形有十分强的鲁棒性；3）由于其对输入的灵活性，SPP可以池化从各种尺度抽取出来的特征。<br>&ensp;&ensp;&ensp;&ensp;SPP-net不仅仅让测试阶段允许任意尺寸的输入能够产生表示(representations)，也允许训练阶段的图像可以有各种尺寸和缩放尺度。使用各种尺寸的图像进行训练可以提高尺度不变性，以及减少过拟合。作者开发了一个简单的多尺度训练方法。为了实现一个单一网络能够接受各种输入尺寸，使用多个共享所有权重（Parameters）的网络来近似得到这种效果，不过，这里的每个网络分别使用固定输入尺寸进行训练。每个epoch 使用固定的尺寸训练这个网络，下一轮使用另一个尺寸来训练。实验表明，这种多尺度的训练与传统的单体型训练是的收敛速度是一样的，但是带来更好的测试精度。</p>
+<div align="center"><img src="./images/sppnet_1.png" width="391" height="234" align="center/"></div>
+
+<p>&ensp;&ensp;&ensp;&ensp;上图显示了一个3级金字塔池化（4x4、2x2、1x1）的示例配置，其共有16+4+1=21个bin，其通过金字塔池化的输出张量为21x256。<br>&ensp;&ensp;&ensp;&ensp;理论上将，上述网络结构可以用标准的反向传播进行训练[1]，与图像的大小无关。<strong>但实践中，GPU的实现（如cuda-convnet和Caffe）更适合运行在固定输入图像上</strong>（所以作者在多尺度训练时选用的180x180,224x224的固定尺寸）。作者共设计了两种训练模式单尺度训练和多尺度训练。<br>1.单尺度训练<br>&ensp;&ensp;&ensp;&ensp;首先考虑接收裁剪成224×224图像的网络。裁剪的目的是数据增强。对于一个给定尺寸的图像，先计算空间金字塔池化所需要的块（bins）的大小。考虑一个尺寸是axa（也就是13×13）的conv5之后特征图。对于nxn块的金字塔层的块bins，将这个池level作为一个滑动窗口池来实现，窗口的大小的win=[a/n]和步长s=[a/n]。用l级的金字塔，实现l这样的层（With an l-level pyramid,we implement l such layers. ）。下一个完全连接的层（fc6）将连接则这l个输出。如下图显示了一个3级金字塔池（3x3、2x2、1x1）的示例配置。</p>
+<div align="center"><img src="./images/sppnet_2.png" width="468" height="304" align="center/"></div>
+
+<p>如果网络为Alexnet，原来最后一个池化层输出的大小为6x6x256,通过上述的spp结构其共有9+4+1=14个bin，其输出的大小为14x256。<br>2.多尺度训练<br>&ensp;&ensp;&ensp;&ensp;带有SPP的网络可以应用于任意尺寸，为了解决不同图像尺寸的训练问题，考虑一些预设好的尺寸。现在考虑这两个尺寸：180×180,224×224。使用缩放而不是裁剪，将前述的224的区域图像变成180大小。这样，不同尺度的区域仅仅是分辨率上的不同，而不是内容和布局上的不同。对于接受180输入的网络，实现另一个固定尺寸的网络。本例中，conv5输出的特征图尺寸是axa=10×10。仍然使用$win = \lceil[a/n]$，$str = \lfloor[a/n]$，实现每个金字塔池化层。这个180网络的空间金字塔层的输出的大小就和224网络的一样了。这样，这个180网络就和224网络拥有一样的参数了。换句话说，训练过程中，通过使用共享参数的两个固定尺寸的网络实现了不同输入尺寸的SPP-net。为了降低从一个网络（比如224）向另一个网络（比如180）切换的开销，在每个网络上训练一个完整的epoch，然后在下一个完成的epoch再切换到另一个网络（权重保留）。依此往复。实验中发现多尺寸训练的收敛速度和单尺寸差不多。多尺寸训练的主要目的是在保证已经充分利用现在被较好优化的固定尺寸网络实现的同时，模拟不同的输入尺寸。除了上述两个尺度的实现，也在每个epoch中测试了不同的sxs输入，s是从180到224之间均匀选取的。后面将在实验部分报告这些测试的结果。注意，上面的单尺寸或多尺寸解析度只用于训练。在测试阶段，是直接对各种尺寸的图像应用SPP-net的。<br>3.<strong>sppnet用于目标检测</strong><br>&ensp;&ensp;&ensp;&ensp;除了用于分类之外，其另外一个主要的用途是目标检测。使用选择性搜索的“fast”模式对每张图片产生2000个候选窗口。然后缩放图像以满足min(w;h) = s，并且从整张图像中抽取特征图。我们暂时使用ZF-5的SPP-net模型（单一尺寸训练）。在每个候选窗口，使用一个4级空间金字塔（1×1, 2×2, 3×3, 6×6, 总共50块）。每个窗口将产生一个12800（256×50）维的表示。这些表示传递给网络的全连接层。然后针对每个分类训练一个二分线性SVM分类器。在训练SVM时使用真实标注的窗口去生成正例。负例是那些与正例窗口重叠不超过30%的窗口（使用IoU比例）。如果一个负例与另一个负例重叠超过70%就会被移除。并且和<strong>RCNN</strong>一样使用标准的难负例挖掘算法（standard hard negative mining ）训练SVM。这个步骤只迭代一次。对于全部20个分类训练SVM小于1小时。测试阶段，分类器用来对候选窗口打分。然后在打分窗口上使用非极大值抑制算法（30%的阈值）。<br>        通过多尺度特征提取，方法的检测结果可以得到改善。将图像缩放成min(w;h) = s \belongs S = {480; 576; 688; 864; 1200 }，然后针对每个尺度计算conv5的特征图。一个结合这些这些不同尺度特征的策略是逐个channel的池化。但作者从经验上发现另一个策略有更好的效果。对于每个候选窗口，选择一个单一尺度s \belongs S，令缩放后的候选窗口的像素数量接近与224×224。然后从这个尺度抽取的特征图去计算窗口的特征。如果这个预定义的尺度足够密集，窗口近似于正方形。这个方法粗略地等效于将窗口缩放到224×224，然后再从中抽取特征。但此方法在每个尺度只计算一次特征图，不管有多少个候选窗口。<br>&ensp;&ensp;&ensp;&ensp;作者参照<strong>RCNN</strong>对预训练的网络进行了调优。由于对于任意尺寸的窗口，都是从conv5的特征图中池化来得到特征的，为了简单起见，只调优全连接层。本例中，数据层接受conv5之后的固定长度的池化后的特征，后面跟着fc_{6,7}和一个新的21路（有一个负例类别）fc8层。fc8的权重使用高斯分布进行初始化σ=0.01。修正所有的learning rate为1e-4，再将全部三层调整为1e-5。调优过程中正例是与标注窗口重叠度达到[0.5, 1]的窗口，负例是重叠度为[0.1, 0.5]的。每个mini-batch，25%是正例。使用学习率1e-4训练了250k个minibatch，然后使用1e-5训练50k个minibatch。因为我们只调优fc层，所以训练非常的快，在GPU上只需要2个小时，不包括预缓存特征图所需要的1小时。另外，使用了约束框回归来后处理预测窗口。用于回归的特征也是conv5之后的池化后的特征。用于回归训练的是那些与标注窗口至少重叠50%的窗口。</p>
+<p>参考：<br>  &ensp;<a href="https://arxiv.org/abs/1406.4729" target="_blank" rel="noopener">https://arxiv.org/abs/1406.4729</a><br>  &ensp;<a href="https://blog.csdn.net/alibabazhouyu/article/details/80058009" target="_blank" rel="noopener">https://blog.csdn.net/alibabazhouyu/article/details/80058009</a></p>
+<p> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
+
       
 
       
-    </p></div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -198,11 +236,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标检测</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Resnext</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sppnet</a>
         		</li>
       		
 		</ul>
@@ -211,16 +249,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/26/resnext/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/02/sppnet/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/06/02/rcnn/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RCNN论文笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -239,6 +336,16 @@
 </aside>
 
 
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
 <section id="comments" class="comments">
@@ -265,691 +372,6 @@
     }
 </script>
   </section>
-
-
-  
-    <article id="post-densenet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/26/densenet/">Densenet论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/densenet/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/26/densenet/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:05:44.258Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&ensp;&ensp;&ensp;&ensp;<strong>Densenet</strong>和<strong>Resnet</strong>类似都使用了断路连接的方式(<strong>Densenet</strong>为concat，<strong>Resnet</strong>为add)，但是<strong>Densenet</strong>做的更加“粗暴”，它将第L层前的每一层的输出都连接到第L层上，这样做可以进行特征复用和使用更少的通道数来减少参数量，第l层的输入为k<sub>0</sub>+k(l-1),输出channel为k，并且称k为增长率。当然这是在<strong>Dense block</strong>中进行的，不然随着网络层数的增加每一层的输入将不断增长。<br>
-        
-          <a class="article-more-a" href="/2019/05/26/densenet/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Densenet</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/26/densenet/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
-    <article id="post-resnet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/26/resnet/">Resnet论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/resnet/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/26/resnet/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:05:22.661Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&ensp;&ensp;&ensp;&ensp;<strong>Resnet</strong>是何凯明的一部神作，残差结构的出现真正让卷积神经网络<strong>gooing deeper</strong>，通过残差结构可以达到152层(resnetv1的1202层效果并不是很好，resnetv2达到了1000层以上），这种结构的改进可以说是和BN一样具有网络通用性。那么大神是怎么想到这一点的呢，这篇论文的动机来自于作者观察到的一个普遍现象，在较深的卷积神经网络训练过程中精度会慢慢达到饱和然后快速退化，而这种退化不是因为过拟合(因为这种现象同样发生在训练阶段)或者梯度消失(作者在实验阶段证实了这一点)等原因造成。<br>
-        
-          <a class="article-more-a" href="/2019/05/26/resnet/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Resnet</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/26/resnet/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
-    <article id="post-xception" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/26/xception/">xception论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/xception/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/26/xception/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:04:58.963Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&ensp;&ensp;&ensp;&ensp;<strong>Xception</strong>是<strong>Inception</strong>系列的最后一篇，其主要思想是建立在卷积的空间相关性和通道相关性是可以解耦的，论文对之前<strong>Inception</strong>系列的工作做出了分析，通过类比分析说明了<strong>Inception</strong>的结构其实始终是建立在这种假设之上的，最后采用了轻量级神经网络常采用的深度可分离卷积搭配残差结构，但是有意思的是<strong>Inception</strong>系列中只要用了残差结构的，在其论文中都会不同程度的diss残差结构，看来还是老郭说的对，只有同行之间才是赤裸裸的仇恨啊。<br>
-        
-          <a class="article-more-a" href="/2019/05/26/xception/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xception</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/26/xception/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
-    <article id="post-inceptionv3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/19/inceptionv3/">inceptionv3论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/19/inceptionv3/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/19/inceptionv3/" class="archive-article-date">
-  	<time datetime="2019-05-19T12:10:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> &ensp;&ensp;&ensp;&ensp;在<strong>inceptionv2</strong>提出<strong>Batch-Normalization</strong>之后很大程度上加速了网络收敛，在<strong>inceptionv3</strong>中大量采用了卷积分解的方法来进一步减少计算量，并且提出了一些LSR方法来平滑标签来用预测概率来拟合真实概率。论文首先根据大量的实验提出了设计卷积神经网络的四个一般性原则：<br>
-        
-          <a class="article-more-a" href="/2019/05/19/inceptionv3/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">inceptionv3</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/19/inceptionv3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
-    <article id="post-inceptionv1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/19/inceptionv1/">inceptionv1论文笔记</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/19/inceptionv1/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/19/inceptionv1/" class="archive-article-date">
-  	<time datetime="2019-05-19T04:30:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&ensp;&ensp;&ensp;&ensp;<strong>Inception</strong>的中文翻译为”盗梦空间”，取其“<strong>we need go deeper</strong>“的意思，要了解这篇论文，首先我们需要搞清楚其动机，也就是论文的切入点，这样也会让我们产生一些思考，寻求一些不同的解决方法，毕竟解决问题的前提是先要学会发现问题。<br>
-        
-          <a class="article-more-a" href="/2019/05/19/inceptionv1/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">inceptionv1</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/19/inceptionv1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/11/hello-world/">Hello World</a>
-    </h1>
-  
-
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/11/hello-world/" class="pageViews">0</span>次
-  </a>
-
-        
-        <a href="/2019/05/11/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-11T09:04:31.009Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br>
-        
-          <a class="article-more-a" href="/2019/05/11/hello-world/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/11/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-<section id="comments" class="comments">
-  <style>
-    .comments{margin:30px;padding:10px;background:#fff}
-    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-  </style>
-  <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
-            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
-            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
-            avatar:"mm"
-        });
-    }
-</script>
-  </section>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
-  
 
 
           </div>
@@ -971,8 +393,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
