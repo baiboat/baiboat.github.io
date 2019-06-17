@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/06/16/faster_rcnn/images/faster_rcnn_anchor_shift_all.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/16/faster_rcnn/images/faster_rcnn_proposal_layer.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/16/faster_rcnn/images/faster_rcnn_roi+pooling.png">
-<meta property="og:updated_time" content="2019-06-17T07:33:19.104Z">
+<meta property="og:updated_time" content="2019-06-17T09:27:02.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster RCNN论文笔记">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;在Fast RCNN中，rgb大神已经将RCNN中提取特征、训练分类器和训练位置回归合并为一个网络，极大的节省了时间和空间开销，现在Fast RCNN中面临的另一个瓶颈就是建议框的生成，在Fast RCNN中依然使用的是selective search的方法，这种方法耗费大量的时间，所以在Faster RCNN中，作者继续发力提出了RPN来代替sel">
@@ -234,7 +234,7 @@
 <p>&ensp;&ensp;&ensp;&ensp;其中_fast_rcnn_loc_loss函数及其调用的_smooth_l1_loss定义如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def _smooth_l1_loss(x, t, in_weight, sigma):</span><br><span class="line">	sigma2 = sigma ** <span class="number">2</span></span><br><span class="line">	diff = in_weight * (x - t)</span><br><span class="line">	abs_diff = diff.abs()</span><br><span class="line">	flag = (abs_diff.data &lt; (<span class="number">1.</span> / sigma2)).float()</span><br><span class="line">	y = (flag * (sigma2 / <span class="number">2.</span>) * (diff ** <span class="number">2</span>) +</span><br><span class="line">		 (<span class="number">1</span> - flag) * (abs_diff - <span class="number">0.5</span> / sigma2))</span><br><span class="line">	<span class="keyword">return</span> y.sum()</span><br><span class="line"></span><br><span class="line">def _fast_rcnn_loc_loss(pred_loc, gt_loc, gt_label, sigma):</span><br><span class="line">	in_weight = t.zeros(gt_loc.shape).cuda()</span><br><span class="line">	# Localization loss is calculated only for positive rois.</span><br><span class="line">	# NOTE:  unlike origin implementation, </span><br><span class="line">	# we don't need inside_weight and outside_weight, they can calculate by gt_label</span><br><span class="line">	in_weight[(gt_label &gt; <span class="number">0</span>).view(<span class="number">-1</span>, <span class="number">1</span>).expand_as(in_weight).cuda()] = <span class="number">1</span></span><br><span class="line">	loc_loss = _smooth_l1_loss(pred_loc, gt_loc, in_weight.detach(), sigma)</span><br><span class="line">	# Normalize by total number of negtive and positive rois.</span><br><span class="line">	loc_loss /= ((gt_label &gt;= 0).sum().float()) # ignore gt_label==-1 for rpn_loss</span><br><span class="line">	<span class="keyword">return</span> loc_loss</span><br></pre></td></tr></table></figure></p>
 <h6 id="total-loss"><a href="#total-loss" class="headerlink" title="total loss"></a>total loss</h6><p>&ensp;&ensp;&ensp;&ensp;因为这个版本的代码使用的是近似联合训练，所以其总的loss为<strong>RPN loss</strong>与<strong>roi_head/Fast RCNN  loss</strong>之和，其代码为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">losses = [rpn_loc_loss, rpn_cls_loss, roi_loc_loss, roi_cls_loss]</span><br><span class="line">losses = losses + [sum(losses)]#[rpn_loc_loss, rpn_cls_loss, roi_loc_loss, roi_cls_loss, sum(losses)]</span><br><span class="line"><span class="keyword">return</span> LossTuple(*losses)</span><br></pre></td></tr></table></figure></p>
 <p><strong>注意</strong>：此处并没有使用$N_{cls}$和$N_{reg}$进行标准化，因为论文中也提到了通过实验发现这种归一化是不必要的。</p>
-<p>参考：<br>  &ensp;<a href="https://zhuanlan.zhihu.com/p/32404424" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32404424</a><br>  &ensp;<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31426458</a><br>  &ensp;<a href="http://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/" target="_blank" rel="noopener">http://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/</a><br>  &ensp;<a href="https://www.cnblogs.com/hanjianjian90/p/10540104.html" target="_blank" rel="noopener">https://www.cnblogs.com/hanjianjian90/p/10540104.html</a></p>
+<p>参考：<br>  &ensp;<a href="https://arxiv.org/pdf/1506.01497.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1506.01497.pdf</a><br>  &ensp;<a href="https://zhuanlan.zhihu.com/p/32404424" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32404424</a><br>  &ensp;<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31426458</a><br>  &ensp;<a href="http://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/" target="_blank" rel="noopener">http://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/</a><br>  &ensp;<a href="https://www.cnblogs.com/hanjianjian90/p/10540104.html" target="_blank" rel="noopener">https://www.cnblogs.com/hanjianjian90/p/10540104.html</a></p>
 <p> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
 
       
@@ -598,11 +598,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
+                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
+                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,7 +610,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,7 +618,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
+                <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,15 +626,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">res2net</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -646,7 +638,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SENET</a>
+                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,7 +654,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
+                <a href="javascript:void(0)" class="js-tag color1">SENET</a>
               </li>
              
               <li class="article-tag-list-item">
