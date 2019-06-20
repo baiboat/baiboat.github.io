@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/06/16/faster_rcnn/images/faster_rcnn_anchor_shift_all.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/16/faster_rcnn/images/faster_rcnn_proposal_layer.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/16/faster_rcnn/images/faster_rcnn_roi+pooling.png">
-<meta property="og:updated_time" content="2019-06-17T14:23:39.507Z">
+<meta property="og:updated_time" content="2019-06-20T01:55:17.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster RCNN论文笔记">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;在Fast RCNN中，rgb大神已经将RCNN中提取特征、训练分类器和训练位置回归合并为一个网络，极大的节省了时间和空间开销，现在Fast RCNN中面临的另一个瓶颈就是建议框的生成，在Fast RCNN中依然使用的是selective search的方法，这种方法耗费大量的时间，所以在Faster RCNN中，作者继续发力提出了RPN来代替sel">
@@ -193,7 +193,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&ensp;&ensp;&ensp;&ensp;在<strong>Fast RCNN</strong>中，rgb大神已经将<strong>RCNN</strong>中提取特征、训练分类器和训练位置回归合并为一个网络，极大的节省了时间和空间开销，现在<strong>Fast RCNN</strong>中面临的另一个瓶颈就是建议框的生成，在<strong>Fast RCNN</strong>中依然使用的是<strong>selective search</strong>的方法，这种方法耗费大量的时间，所以在<strong>Faster RCNN</strong>中，作者继续发力提出了<strong>RPN</strong>来代替<strong>selective search</strong>方法，几乎将这一部分花费的时间降为了0秒（2s -&gt; 0.01s）。<br><a id="more"></a><br>在网上已经有很多大神对不同版本实现的<strong>Faster RCNN</strong>进行了解读，但是有些细节还是百思不得其解，本想从源码角度来捋一捋，奈何水平有限，caffe版本的源码都不知从何看起。原作者的caffe版本源码见<a href="https://github.com/rbgirshick/py-faster-rcnn" target="_blank" rel="noopener"><strong>py-faster-rcnn</strong></a>，对于该版本较好的讲解见<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">一文读懂Faster RCNN</a>。Tensorflow版本的源码见<a href="https://github.com/endernewton/tf-faster-rcnn" target="_blank" rel="noopener"><strong>tf-faster-rcnn</strong></a>。pytorch版本的源码见<a href="https://github.com/ruotianluo/pytorch-faster-rcnn" target="_blank" rel="noopener"><strong>ruotianluo/pytorch-faster-rcnn</strong></a>，对于该版本的讲解见<a href="http://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/" target="_blank" rel="noopener">Object Detection and Classification using R-CNNs</a>。对于此博客参考的是陈云实现的简易版的pytorch实现<a href="https://github.com/chenyuntc/simple-faster-rcnn-pytorch" target="_blank" rel="noopener"><strong>simple-faster-rcnn-pytorch</strong></a>，陈云自己的讲解见<a href="https://zhuanlan.zhihu.com/p/32404424" target="_blank" rel="noopener">从编程实现角度学习Faster R-CNN（附极简实现）</a>。这篇博客大部分内容也是参考的前面几个讲解，在此对这几位的工作表示膜拜。虽然是简易版但其效果也不错，而且更适合来理解网络的脉络。从编程角度来说， Faster R-CNN主要分为四部分：<br>&ensp;&ensp;&ensp;&ensp;1）Dataset：数据，提供符合要求的数据格式（目前常用数据集是VOC和COCO）。<br>&ensp;&ensp;&ensp;&ensp;2）Extractor： 利用CNN提取图片特征features（原始论文用的是ZF和VGG16，后来人们又用ResNet101）。<br>&ensp;&ensp;&ensp;&ensp;3）RPN(Region Proposal Network): 负责提供候选区域rois（每张图给出大概2000个候选框）。<br>&ensp;&ensp;&ensp;&ensp;4）RoIHead： 负责对rois分类和微调。对RPN找出的rois，判断它是否包含目标，并修正框的位置和坐标（对应论文中的Fast RCNN，为了避免混淆记为ROIHead）。<br>Faster R-CNN整体的流程可以分为三步：<br>&ensp;&ensp;&ensp;&ensp;1）提特征： 图片（img）经过预训练的网络（Extractor），提取到了图片的特征（feature）。<br>&ensp;&ensp;&ensp;&ensp;2）Region Proposal： 利用提取的特征（feature），经过RPN网络，找出一定数量的rois（region of interests）。<br>&ensp;&ensp;&ensp;&ensp;3）分类与回归：将rois和图像特征features，输入到RoIHead，对这些rois进行分类，判断都属于什么类别，同时对这些rois的位置进行微调。<br>在论文中作者给出了<strong>Faster RCNN</strong>三种训练方式：<br>&ensp;&ensp;&ensp;&ensp;1）交替训练。首先训练RPN，使用proposals训练Fast R-CNN。网络使用Fast R-CNN微调，然后用来初始化RPN,迭代这个过程。<br>&ensp;&ensp;&ensp;&ensp;2）近似联合训练。在每次SGD迭代时，前馈计算生成区域推荐，看作训练Fast R-CNN检测器的预计算推荐。反馈传播中共享层传播RPN和Fast R-CNN结合的损失。这种方式忽略了关于推荐框坐标的导数。<br>&ensp;&ensp;&ensp;&ensp;3）非近似联合训练。Fast R-CNN中的 RoI pooling层接收卷积特征和预测的bounding boxes作为输入，这时反向传播会涉及到box corrdinates.这时需要RoI poling层关于box coordinates是可微的。<br>作者的论文中实现的是4步交替训练，第一步，训练RPN，用预训练的ImageNet模型初始化，端到端微调区域推荐任务。第二步，通过Fast R-CNN训练一个单独的检测网络，从第一步的模型中产生推荐框。这个网络也用ImageNet模型初始化。这时候两个网络不共享卷积层。第三步，使用检测网络初始化RPN训练，固定了共享卷积层，只微调独属于RPN的层。现在两个网络共享卷积层。第四步，使卷积层固定，微调独属于Fast R-CNN的层。这样，两个网络共享了卷基层，形成了一个统一网络。陈云的pytorch实现是采用的近似联合训练，其网络模型如下：</p>
+        <p>&ensp;&ensp;&ensp;&ensp;在<strong>Fast RCNN</strong>中，rgb大神已经将<strong>RCNN</strong>中提取特征、训练分类器和训练位置回归合并为一个网络，极大的节省了时间和空间开销，现在<strong>Fast RCNN</strong>中面临的另一个瓶颈就是建议框的生成，在<strong>Fast RCNN</strong>中依然使用的是<strong>selective search</strong>的方法，这种方法耗费大量的时间，所以在<strong>Faster RCNN</strong>中，作者继续发力提出了<strong>RPN</strong>来代替<strong>selective search</strong>方法，几乎将这一部分花费的时间降为了0秒（2s -&gt; 0.01s）。<br><a id="more"></a><br>在网上已经有很多大神对不同版本实现的<strong>Faster RCNN</strong>进行了解读，但是有些细节还是百思不得其解，本想从源码角度来捋一捋，奈何水平有限，caffe版本的源码都不知从何看起。原作者的caffe版本源码见<a href="https://github.com/rbgirshick/py-faster-rcnn" target="_blank" rel="noopener"><strong>py-faster-rcnn</strong></a>，对于该版本较好的讲解见<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">一文读懂Faster RCNN</a>,<a href="https://zhuanlan.zhihu.com/p/47085859" target="_blank" rel="noopener">知乎中目标检测专栏中的系列文章</a>。Tensorflow版本的源码见<a href="https://github.com/endernewton/tf-faster-rcnn" target="_blank" rel="noopener"><strong>tf-faster-rcnn</strong></a>。pytorch版本的源码见<a href="https://github.com/ruotianluo/pytorch-faster-rcnn" target="_blank" rel="noopener"><strong>ruotianluo/pytorch-faster-rcnn</strong></a>，对于该版本的讲解见<a href="http://www.telesens.co/2018/03/11/object-detection-and-classification-using-r-cnns/" target="_blank" rel="noopener">Object Detection and Classification using R-CNNs</a>。对于此博客参考的是陈云实现的简易版的pytorch实现<a href="https://github.com/chenyuntc/simple-faster-rcnn-pytorch" target="_blank" rel="noopener"><strong>simple-faster-rcnn-pytorch</strong></a>，陈云自己的讲解见<a href="https://zhuanlan.zhihu.com/p/32404424" target="_blank" rel="noopener">从编程实现角度学习Faster R-CNN（附极简实现）</a>。这篇博客大部分内容也是参考的前面几个讲解，在此对这几位的工作表示膜拜。虽然是简易版但其效果也不错，而且更适合来理解网络的脉络。从编程角度来说， Faster R-CNN主要分为四部分：<br>&ensp;&ensp;&ensp;&ensp;1）Dataset：数据，提供符合要求的数据格式（目前常用数据集是VOC和COCO）。<br>&ensp;&ensp;&ensp;&ensp;2）Extractor： 利用CNN提取图片特征features（原始论文用的是ZF和VGG16，后来人们又用ResNet101）。<br>&ensp;&ensp;&ensp;&ensp;3）RPN(Region Proposal Network): 负责提供候选区域rois（每张图给出大概2000个候选框）。<br>&ensp;&ensp;&ensp;&ensp;4）RoIHead： 负责对rois分类和微调。对RPN找出的rois，判断它是否包含目标，并修正框的位置和坐标（对应论文中的Fast RCNN，为了避免混淆记为ROIHead）。<br>Faster R-CNN整体的流程可以分为三步：<br>&ensp;&ensp;&ensp;&ensp;1）提特征： 图片（img）经过预训练的网络（Extractor），提取到了图片的特征（feature）。<br>&ensp;&ensp;&ensp;&ensp;2）Region Proposal： 利用提取的特征（feature），经过RPN网络，找出一定数量的rois（region of interests）。<br>&ensp;&ensp;&ensp;&ensp;3）分类与回归：将rois和图像特征features，输入到RoIHead，对这些rois进行分类，判断都属于什么类别，同时对这些rois的位置进行微调。<br>在论文中作者给出了<strong>Faster RCNN</strong>三种训练方式：<br>&ensp;&ensp;&ensp;&ensp;1）交替训练。首先训练RPN，使用proposals训练Fast R-CNN。网络使用Fast R-CNN微调，然后用来初始化RPN,迭代这个过程。<br>&ensp;&ensp;&ensp;&ensp;2）近似联合训练。在每次SGD迭代时，前馈计算生成区域推荐，看作训练Fast R-CNN检测器的预计算推荐。反馈传播中共享层传播RPN和Fast R-CNN结合的损失。这种方式忽略了关于推荐框坐标的导数。<br>&ensp;&ensp;&ensp;&ensp;3）非近似联合训练。Fast R-CNN中的 RoI pooling层接收卷积特征和预测的bounding boxes作为输入，这时反向传播会涉及到box corrdinates.这时需要RoI poling层关于box coordinates是可微的。<br>作者的论文中实现的是4步交替训练，第一步，训练RPN，用预训练的ImageNet模型初始化，端到端微调区域推荐任务。第二步，通过Fast R-CNN训练一个单独的检测网络，从第一步的模型中产生推荐框。这个网络也用ImageNet模型初始化。这时候两个网络不共享卷积层。第三步，使用检测网络初始化RPN训练，固定了共享卷积层，只微调独属于RPN的层。现在两个网络共享卷积层。第四步，使卷积层固定，微调独属于Fast R-CNN的层。这样，两个网络共享了卷基层，形成了一个统一网络。陈云的pytorch实现是采用的近似联合训练，其网络模型如下：</p>
 <div align="center"><img src="./images/faster_rcnn_network.jpg" width="300" height="700" align="center/"></div>
 
 <p>需要注意的是： 蓝色箭头的线代表着计算图，梯度反向传播会经过。而红色部分的线不需要进行反向传播（论文了中提到了ProposalCreator生成RoIs的过程也能进行反向传播，但需要专门的算法）</p>
@@ -598,10 +598,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
               </li>
              
@@ -610,7 +606,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv3</a>
+                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,15 +614,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv3</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -638,19 +642,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
+                <a href="javascript:void(0)" class="js-tag color1">SENET</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SENET</a>
+                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
               </li>
              
               <li class="article-tag-list-item">
