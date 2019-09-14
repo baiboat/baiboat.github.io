@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: Resnext | Tshangs</title>
+  <title>pytorch autograd 机制 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tshangs">
-<meta property="og:url" content="http://yoursite.com/tags/Resnext/index.html">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;不论对于任何深度学习框架其自动求导机制一定是其核心模块，pytorch也不例外，pytorch的自动求导主要依赖于autograd这个包，pytorch与tensorflow有所不同，其主要是构建动态图，这也意味着每一次迭代的反向传播都有可能不同。">
+<meta name="keywords" content="深度学习,pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch autograd 机制">
+<meta property="og:url" content="http://yoursite.com/2019/09/14/pytorch_autograd/index.html">
 <meta property="og:site_name" content="Tshangs">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;不论对于任何深度学习框架其自动求导机制一定是其核心模块，pytorch也不例外，pytorch的自动求导主要依赖于autograd这个包，pytorch与tensorflow有所不同，其主要是构建动态图，这也意味着每一次迭代的反向传播都有可能不同。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/09/14/pytorch_autograd/images/WechatIMG51.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/09/14/pytorch_autograd/images/WechatIMG52.jpeg">
+<meta property="og:updated_time" content="2019-09-14T03:07:24.603Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tshangs">
+<meta name="twitter:title" content="pytorch autograd 机制">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;不论对于任何深度学习框架其自动求导机制一定是其核心模块，pytorch也不例外，pytorch的自动求导主要依赖于autograd这个包，pytorch与tensorflow有所不同，其主要是构建动态图，这也意味着每一次迭代的反向传播都有可能不同。">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/14/pytorch_autograd/images/WechatIMG51.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -150,42 +158,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-pytorch_autograd" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/26/resnext/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:05:56.298Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/26/resnext/">Resnext论文笔记</a>
+    <h1 class="article-title" itemprop="name">
+      pytorch autograd 机制
     </h1>
   
 
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/resnext/" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/09/14/pytorch_autograd/" class="pageViews">0</span>次
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/09/14/pytorch_autograd/" class="archive-article-date">
+  	<time datetime="2019-09-14T03:03:49.171Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&ensp;&ensp;&ensp;&ensp;不论对于任何深度学习框架其自动求导机制一定是其核心模块，<strong>pytorch</strong>也不例外，<strong>pytorch</strong>的自动求导主要依赖于<strong>autograd</strong>这个包，<strong>pytorch</strong>与<strong>tensorflow</strong>有所不同，其主要是构建动态图，这也意味着每一次迭代的反向传播都有可能不同。<br><a id="more"></a><br>关于自动求导的例子<strong>pytorch</strong>的官方手册的例子非常好，可以在这里查看<a href="https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#sphx-glr-beginner-blitz-autograd-tutorial-py" target="_blank" rel="noopener">Autograd: Automatic Differentiation</a>,其实反向传播也主要是根据链式求导法则，但是还有一点我们在官方手册中会看到就是必须要求最后的输出为标量才可以终结链式求导法则，<strong>pytorch</strong>的<strong>autograd</strong>包也才可以计算出完整的<strong>Jacobian</strong>，否则当我们调用y.backward()方法时会提示错误，或者当我们在调用y.backward()时额外输入一个向量来终结链式法则，便可得到一个 <strong>vector-Jacobian product</strong>，这时可能有人比较疑惑，或者不知道输出的是什么东西，下面通过一个例子大家就可以清楚的搞明白这个过程。<br>&ensp;&ensp;&ensp;&ensp;这里由于输入公式比较麻烦，就直接上图了，推导过程见下（请忽略丑字）：</p>
+<p><div align="center"><img src="./images/WechatIMG51.jpeg" width="520" height="750" align="center/"></div><br>接下页如下：</p>
+<p><div align="center"><img src="./images/WechatIMG52.jpeg" width="520" height="750" align="center/"></div><br>所以在运行如下代码时会得到tensor([[ 1.8000,  0.0000], [18.0000,  0.0000]])的输出。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">x = torch.ones(<span class="number">2</span>, <span class="number">2</span>, requires_grad=True)</span><br><span class="line">print(x)</span><br><span class="line">y = x + <span class="number">2</span></span><br><span class="line">print(y)</span><br><span class="line">print(y.grad_fn)</span><br><span class="line">z = y * y * <span class="number">3</span></span><br><span class="line">z_1 = torch.tensor([<span class="number">1</span>, <span class="number">0</span>], dtype=torch.float32).view(<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">out = torch.mm(z, z_1)</span><br><span class="line">print(z, out)</span><br><span class="line">gradients = torch.tensor([<span class="number">0.1</span>, <span class="number">1.0</span>], dtype=torch.float).view(<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">out.backward(gradients)</span><br><span class="line">print(x.grad)</span><br></pre></td></tr></table></figure></p>
+<p>而如果不传入gradients这个向量来终结链式求导法则时，会报如下错误：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">raise RuntimeError(<span class="string">"grad can be implicitly created only for scalar outputs"</span>) RuntimeError: grad can be implicitly created only <span class="keyword">for</span> scalar outputs</span><br></pre></td></tr></table></figure></p>
+<p>参考：<br>  &ensp;<a href="https://pytorch.org/tutorials/" target="_blank" rel="noopener">https://pytorch.org/tutorials/</a><br> <strong>注</strong>：此博客内容为原创，转载请说明出处</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -195,29 +232,138 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Resnext</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">pytorch</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/09/14/pytorch_autograd/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/08/19/mask_rcnn/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mask RCNN论文笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
+            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"mm"
+        });
+    }
+</script>
+  </section>
 
 
           </div>
@@ -240,9 +386,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
