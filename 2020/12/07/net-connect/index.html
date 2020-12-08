@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: Resnext | Tshangs</title>
+  <title>服务器远程控制 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tshangs">
-<meta property="og:url" content="http://yoursite.com/tags/Resnext/index.html">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。">
+<meta name="keywords" content="远程控制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器远程控制">
+<meta property="og:url" content="http://yoursite.com/2020/12/07/net-connect/index.html">
 <meta property="og:site_name" content="Tshangs">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-12-07T14:53:01.946Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tshangs">
+<meta name="twitter:title" content="服务器远程控制">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -150,74 +155,218 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-net-connect" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/26/resnext/" class="archive-article-date">
-  	<time datetime="2019-05-26T11:05:56.298Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/26/resnext/">Resnext论文笔记</a>
+    <h1 class="article-title" itemprop="name">
+      服务器远程控制
     </h1>
   
 
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2019/05/26/resnext/" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/12/07/net-connect/" class="pageViews">0</span>次
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/12/07/net-connect/" class="archive-article-date">
+  	<time datetime="2020-12-07T13:44:43.133Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&ensp;&ensp;&ensp;&ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。<br><a id="more"></a></p>
+<h6 id="设置断电自启动"><a href="#设置断电自启动" class="headerlink" title="设置断电自启动"></a>设置断电自启动</h6><p>首先要防范的就是学校突然停电导致关机的情况，首先进入首先进入BIOS的设置主界面，选择Power Management Setup（电源管理设定）→Power Again（再来电状态），此项决定了开机时意外断电之后，电力供应恢复时系统电源的状态。设定值有：<br>Power Off（保持系统处于关机状态）<br>Power On（保持系统处于开机状态）<br>Last State（恢复到系统断电前的状态）进入挂起/睡眠模式，但若按钮被揿下超过4秒，机器关机。<br>把这个选项改成power off就行了！（不同电脑可能有不同的设置，请自行百度）</p>
+<h6 id="设置校园网连接"><a href="#设置校园网连接" class="headerlink" title="设置校园网连接"></a>设置校园网连接</h6><p>在电脑断电重启之后，我们还需要连接校园网，这时候可以通过一个脚本文件来完成。首先新建一个文件夹，然后在文件夹下面新建一个net.py文件，然后将下面代码复制到其中，保存后关闭。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">name = <span class="string">'username'</span></span><br><span class="line">passwd = <span class="string">'Password'</span></span><br><span class="line">payload = &#123;<span class="string">'action'</span>: <span class="string">'login'</span>, <span class="string">'ac_id'</span>: <span class="string">'1'</span>,<span class="string">'username'</span>: name,<span class="string">'password'</span>: passwd,<span class="string">'save_me'</span>:<span class="string">'0'</span>&#125;</span><br><span class="line">r = requests.post(<span class="string">'https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&amp;ac_id=1'</span>, data=payload)</span><br><span class="line">res = r.text</span><br><span class="line"><span class="keyword">if</span> res.find(u<span class="string">'网络已连接'</span>):</span><br><span class="line">		print <span class="string">'You are connected.'</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">		print <span class="string">'Unknown error</span></span><br></pre></td></tr></table></figure></p>
+<p>然后再在文件下新建一个net.sh文件，将下面代码复制到其中，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ./net.py</span><br></pre></td></tr></table></figure></p>
+<p>接下来要设置开机自动运行.sh文件，首先打开rc.local文件，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure></p>
+<p>然后加入命令，<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"># THIS FILE IS ADDED FOR COMPATIBILITY PURPOSES</span><br><span class="line">#</span><br><span class="line"># It is highly advisable to create own systemd services or udev rules</span><br><span class="line"># to run scripts during boot instead of using this file.</span><br><span class="line">#</span><br><span class="line"># In contrast to previous versions due to parallel execution during boot</span><br><span class="line"># this script will NOT be run after all other services.</span><br><span class="line">#</span><br><span class="line"># Please note that you must run 'chmod +x /etc/rc.d/rc.local' to ensure</span><br><span class="line"># that this script will be executed during boot.</span><br><span class="line"></span><br><span class="line">touch /<span class="keyword">var</span>/lock/subsys/local</span><br><span class="line">bash /home/net/net.sh #加入此行</span><br></pre></td></tr></table></figure></p>
+<p>最后添加权限到/etc/rc.d/rc.local，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure></p>
+<h6 id="安装远程控制软件"><a href="#安装远程控制软件" class="headerlink" title="安装远程控制软件"></a>安装远程控制软件</h6><p>我们可以安装teamviewer，但是其在使用频率过多以后会检测为商用然后限制连接，所以推荐使用<a href="https://sunlogin.oray.com/download/" target="_blank" rel="noopener">向日葵</a>，其可以免费支持连接多台电脑，并且连接速度相对于其他免费软件比较稳定。<strong>记得设置开机自启动</strong>。</p>
+<h6 id="SSH连接"><a href="#SSH连接" class="headerlink" title="SSH连接"></a>SSH连接</h6><p>我们还可以通过ssh连接来远程控制我们的电脑，ssh安装过程如下<br>1.要确保CentOS7安装了  openssh-server，在终端中输入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed | grep openssh-server</span><br></pre></td></tr></table></figure></p>
+<p>如果又没任何输出显示表示没有安装  openssh-server，通过输入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install openssh-server</span><br></pre></td></tr></table></figure></p>
+<p>进行安装。<br>2.找到/etc/ssh/  目录下的sshd服务配置文件 sshd_config，用gedit编辑器打开<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></p>
+<p>然后去掉“Port 22”,”ListenAddress 0.0.0.0”,”ListenAddress  ::”,”PermitRootLogin yes”,和”PasswordAuthentication yes”这几项之前的#号，保存退出。<br>3.开启sshd服务，输入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service sshd start</span><br></pre></td></tr></table></figure></p>
+<p>4.为了免去每次开启 CentOS 时，都要手动开启  sshd 服务，可以将 sshd 服务添加至自启动列表中，输入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable sshd.service</span><br></pre></td></tr></table></figure></p>
+<p>此时在校园网中就可以直接使用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@ip</span><br></pre></td></tr></table></figure></p>
+<p>来连接远程主机了。<br>如果不在校园网可以通过下载<a href="https://219.216.89.1/" target="_blank" rel="noopener">easyconnect</a>,然后在服务器IP地址输入219.216.89.1便可以连接校园网了。<br>参考：<br>   &ensp;<a href="https://blog.csdn.net/king_haw/article/details/70164158" target="_blank" rel="noopener">使用py脚本登录东北大学IP控制网关</a><br>  &ensp;<a href="https://blog.csdn.net/chihouzi/article/details/103826855?utm_medium=distribute.pc_relevant.none-task-blog-OPENSEARCH-3.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-OPENSEARCH-3.control" target="_blank" rel="noopener">centos7 开启ssh 服务</a><br>  &ensp;<a href="http://www.neu.edu.cn/vpn.neu.edu.cn/vpnlist.htm" target="_blank" rel="noopener">东北大学VPN服务主页</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标分类</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Resnext</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">远程控制</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/07/net-connect/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/06/17/NMS/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NMS，Fast NMS和Cluster NMS</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+
+
+<section id="comments" class="comments">
+  <style>
+    .comments{margin:30px;padding:10px;background:#fff}
+    @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+  </style>
+  <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "rqvfmdxSdgRQYtJ669DxKNfD-gzGzoHsz",
+            app_key: "a9cbzkW7FTxKUqk4bhYVBgbW",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            avatar:"mm"
+        });
+    }
+</script>
+  </section>
 
 
           </div>
@@ -240,9 +389,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
