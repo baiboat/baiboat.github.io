@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>服务器远程控制 | Tshangs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。">
+  <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：">
 <meta name="keywords" content="远程控制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="服务器远程控制">
 <meta property="og:url" content="http://yoursite.com/2020/12/07/net-connect/index.html">
 <meta property="og:site_name" content="Tshangs">
-<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-07T14:53:01.946Z">
+<meta property="og:updated_time" content="2020-12-08T01:42:38.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器远程控制">
-<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：">
   
     <link rel="alternative" href="/atom.xml" title="Tshangs" type="application/atom+xml">
   
@@ -181,13 +181,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&ensp;&ensp;&ensp;&ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。<br><a id="more"></a></p>
+        <p>&ensp;&ensp;&ensp;&ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：<br><a id="more"></a></p>
 <h6 id="设置断电自启动"><a href="#设置断电自启动" class="headerlink" title="设置断电自启动"></a>设置断电自启动</h6><p>首先要防范的就是学校突然停电导致关机的情况，首先进入首先进入BIOS的设置主界面，选择Power Management Setup（电源管理设定）→Power Again（再来电状态），此项决定了开机时意外断电之后，电力供应恢复时系统电源的状态。设定值有：<br>Power Off（保持系统处于关机状态）<br>Power On（保持系统处于开机状态）<br>Last State（恢复到系统断电前的状态）进入挂起/睡眠模式，但若按钮被揿下超过4秒，机器关机。<br>把这个选项改成power off就行了！（不同电脑可能有不同的设置，请自行百度）</p>
 <h6 id="设置校园网连接"><a href="#设置校园网连接" class="headerlink" title="设置校园网连接"></a>设置校园网连接</h6><p>在电脑断电重启之后，我们还需要连接校园网，这时候可以通过一个脚本文件来完成。首先新建一个文件夹，然后在文件夹下面新建一个net.py文件，然后将下面代码复制到其中，保存后关闭。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">name = <span class="string">'username'</span></span><br><span class="line">passwd = <span class="string">'Password'</span></span><br><span class="line">payload = &#123;<span class="string">'action'</span>: <span class="string">'login'</span>, <span class="string">'ac_id'</span>: <span class="string">'1'</span>,<span class="string">'username'</span>: name,<span class="string">'password'</span>: passwd,<span class="string">'save_me'</span>:<span class="string">'0'</span>&#125;</span><br><span class="line">r = requests.post(<span class="string">'https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&amp;ac_id=1'</span>, data=payload)</span><br><span class="line">res = r.text</span><br><span class="line"><span class="keyword">if</span> res.find(u<span class="string">'网络已连接'</span>):</span><br><span class="line">		print <span class="string">'You are connected.'</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">		print <span class="string">'Unknown error</span></span><br></pre></td></tr></table></figure></p>
 <p>然后再在文件下新建一个net.sh文件，将下面代码复制到其中，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ./net.py</span><br></pre></td></tr></table></figure></p>
 <p>接下来要设置开机自动运行.sh文件，首先打开rc.local文件，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure></p>
 <p>然后加入命令，<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"># THIS FILE IS ADDED FOR COMPATIBILITY PURPOSES</span><br><span class="line">#</span><br><span class="line"># It is highly advisable to create own systemd services or udev rules</span><br><span class="line"># to run scripts during boot instead of using this file.</span><br><span class="line">#</span><br><span class="line"># In contrast to previous versions due to parallel execution during boot</span><br><span class="line"># this script will NOT be run after all other services.</span><br><span class="line">#</span><br><span class="line"># Please note that you must run 'chmod +x /etc/rc.d/rc.local' to ensure</span><br><span class="line"># that this script will be executed during boot.</span><br><span class="line"></span><br><span class="line">touch /<span class="keyword">var</span>/lock/subsys/local</span><br><span class="line">bash /home/net/net.sh #加入此行</span><br></pre></td></tr></table></figure></p>
 <p>最后添加权限到/etc/rc.d/rc.local，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure></p>
+<p>如果是ubuntu 系统则运行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mv net.sh /etc/init.d/</span><br><span class="line">chmod +<span class="number">750</span> net.sh</span><br><span class="line">sudo update-rc.d net.sh defaults</span><br></pre></td></tr></table></figure></p>
 <h6 id="安装远程控制软件"><a href="#安装远程控制软件" class="headerlink" title="安装远程控制软件"></a>安装远程控制软件</h6><p>我们可以安装teamviewer，但是其在使用频率过多以后会检测为商用然后限制连接，所以推荐使用<a href="https://sunlogin.oray.com/download/" target="_blank" rel="noopener">向日葵</a>，其可以免费支持连接多台电脑，并且连接速度相对于其他免费软件比较稳定。<strong>记得设置开机自启动</strong>。</p>
 <h6 id="SSH连接"><a href="#SSH连接" class="headerlink" title="SSH连接"></a>SSH连接</h6><p>我们还可以通过ssh连接来远程控制我们的电脑，ssh安装过程如下<br>1.要确保CentOS7安装了  openssh-server，在终端中输入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed | grep openssh-server</span><br></pre></td></tr></table></figure></p>
 <p>如果又没任何输出显示表示没有安装  openssh-server，通过输入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install openssh-server</span><br></pre></td></tr></table></figure></p>
@@ -550,11 +551,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Loss</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">目标分类</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
+                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,11 +567,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Loss</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Densenet</a>
+                <a href="javascript:void(0)" class="js-tag color4">DPN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -582,11 +583,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">pytorch</a>
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">pytorch</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,11 +603,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
+                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
+                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,11 +615,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SENET</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
+                <a href="javascript:void(0)" class="js-tag color4">xception</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,15 +635,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">xception</a>
+                <a href="javascript:void(0)" class="js-tag color4">SSD</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">YOLOv3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SSD</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,10 +652,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Mask RCNN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
               </li>
             
             <div class="clearfix"></div>
