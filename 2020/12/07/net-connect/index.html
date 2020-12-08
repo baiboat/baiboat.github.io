@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Tshangs">
 <meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-08T01:42:38.476Z">
+<meta property="og:updated_time" content="2020-12-08T12:55:03.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器远程控制">
 <meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：">
@@ -182,7 +182,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>&ensp;&ensp;&ensp;&ensp;疫情还没有结束，为了防止学校停课，学校不让进并且学校断网的情况，所以还是做好准备工作吧。下面以CentOS Linux7为例介绍：<br><a id="more"></a></p>
-<h6 id="设置断电自启动"><a href="#设置断电自启动" class="headerlink" title="设置断电自启动"></a>设置断电自启动</h6><p>首先要防范的就是学校突然停电导致关机的情况，首先进入首先进入BIOS的设置主界面，选择Power Management Setup（电源管理设定）→Power Again（再来电状态），此项决定了开机时意外断电之后，电力供应恢复时系统电源的状态。设定值有：<br>Power Off（保持系统处于关机状态）<br>Power On（保持系统处于开机状态）<br>Last State（恢复到系统断电前的状态）进入挂起/睡眠模式，但若按钮被揿下超过4秒，机器关机。<br>把这个选项改成power off就行了！（不同电脑可能有不同的设置，请自行百度）</p>
+<h6 id="设置断电自启动"><a href="#设置断电自启动" class="headerlink" title="设置断电自启动"></a>设置断电自启动</h6><p>首先要防范的就是学校突然停电导致关机的情况，首先进入BIOS的设置主界面，选择Power Management Setup（电源管理设定）→Power Again（再来电状态），此项决定了开机时意外断电之后，电力供应恢复时系统电源的状态。设定值有：<br>Power Off（保持系统处于关机状态）<br>Power On（保持系统处于开机状态）<br>Last State（恢复到系统断电前的状态）进入挂起/睡眠模式，但若按钮被揿下超过4秒，机器关机。<br>把这个选项改成power on就行了！（不同电脑可能有不同的设置，请自行百度）</p>
 <h6 id="设置校园网连接"><a href="#设置校园网连接" class="headerlink" title="设置校园网连接"></a>设置校园网连接</h6><p>在电脑断电重启之后，我们还需要连接校园网，这时候可以通过一个脚本文件来完成。首先新建一个文件夹，然后在文件夹下面新建一个net.py文件，然后将下面代码复制到其中，保存后关闭。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">name = <span class="string">'username'</span></span><br><span class="line">passwd = <span class="string">'Password'</span></span><br><span class="line">payload = &#123;<span class="string">'action'</span>: <span class="string">'login'</span>, <span class="string">'ac_id'</span>: <span class="string">'1'</span>,<span class="string">'username'</span>: name,<span class="string">'password'</span>: passwd,<span class="string">'save_me'</span>:<span class="string">'0'</span>&#125;</span><br><span class="line">r = requests.post(<span class="string">'https://ipgw.neu.edu.cn/srun_portal_pc.php?url=&amp;ac_id=1'</span>, data=payload)</span><br><span class="line">res = r.text</span><br><span class="line"><span class="keyword">if</span> res.find(u<span class="string">'网络已连接'</span>):</span><br><span class="line">		print <span class="string">'You are connected.'</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">		print <span class="string">'Unknown error</span></span><br></pre></td></tr></table></figure></p>
 <p>然后再在文件下新建一个net.sh文件，将下面代码复制到其中，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ./net.py</span><br></pre></td></tr></table></figure></p>
 <p>接下来要设置开机自动运行.sh文件，首先打开rc.local文件，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure></p>
@@ -571,14 +571,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">inceptionv3</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mobilenet</a>
               </li>
              
@@ -587,11 +579,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv1</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">pytorch</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mobilenetv2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">inceptionv3</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,19 +615,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Resnext</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Resnet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">res2net</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">shufflenetv1</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">sppnet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,15 +627,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">xception</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">shufflenetv2</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">sppnet</a>
+                <a href="javascript:void(0)" class="js-tag color4">xception</a>
               </li>
              
               <li class="article-tag-list-item">
